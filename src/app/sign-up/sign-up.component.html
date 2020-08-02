@@ -1,0 +1,86 @@
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="submit()" class="sign-up">
+    <div class="registration">Registration</div>
+    <div class="form-field-name" style="margin-top: 22px;">First Name</div>
+    <input
+      type="text"
+      class="form-field"
+      formControlName="firstName"
+      [ngClass]="{
+        wrong: form.get('firstName').touched && form.get('firstName').invalid,
+        correct: form.get('firstName').touched && form.get('firstName').valid
+      }"
+    />
+    <div
+      *ngIf="form.get('firstName').touched && form.get('firstName').invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('firstName').errors.required">
+        Имя не должно быть пустым
+      </small>
+    </div>
+    <div class="form-field-name" style="margin-top: 14px;">Last Name</div>
+    <input
+      type="text"
+      class="form-field"
+      formControlName="lastName"
+      [ngClass]="{
+        wrong: form.get('lastName').touched && form.get('lastName').invalid,
+        correct: form.get('lastName').touched && form.get('lastName').valid
+      }"
+    />
+    <div
+      *ngIf="form.get('lastName').touched && form.get('lastName').invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('lastName').errors.required">
+        Фамилия не должна быть пустой
+      </small>
+    </div>
+    <div class="form-field-name" style="margin-top: 14px;">Email</div>
+    <input
+      type="text"
+      class="form-field"
+      formControlName="email"
+      [ngClass]="{
+        wrong: form.get('email').touched && form.get('email').invalid,
+        correct: form.get('email').touched && form.get('email').valid
+      }"
+    />
+    <div
+      *ngIf="form.get('email').touched && form.get('email').invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('email').errors.email">
+        Неверный формат электронной почты
+      </small>
+      <small *ngIf="form.get('email').errors.required">
+        Электронная почта не должна быть пустой
+      </small>
+    </div>
+    <div class="form-field-name" style="margin-top: 14px;">Password</div>
+    <input
+      type="password"
+      class="form-field"
+      formControlName="password"
+      [ngClass]="{
+        wrong: form.get('password').touched && form.get('password').invalid,
+        correct: form.get('password').touched && form.get('password').valid
+      }"
+    />
+    <div
+      *ngIf="form.get('password').touched && form.get('password').invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('password').errors.minlength && form.get('password').errors.minlength.requiredLength > form.get('password').errors.minlength.actualLength">
+        Необходимая минимальная длина пароля: {{ form.get('password').errors.minlength.requiredLength }}. Текушая длина пароля: {{ form.get('password').errors.minlength.actualLength }}
+      </small>
+    </div>
+    <div class="login-link">
+      <a href="">Login</a>
+    </div>
+    <button type="submit" class="submit" [disabled]="form.invalid">
+      Submit
+    </button>
+  </form>
+</div>
