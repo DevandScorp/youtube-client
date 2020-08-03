@@ -5,13 +5,13 @@ div.container {
   height: 100vh;
   background: #f2f2f2;
 }
-form.sign-up {
-  width: 344px;
-  height: 422px;
+form.login {
+  width: 350px;
+  height: 270px;
   background: white;
   border-radius: 5px;
 }
-div.registration {
+div.login {
   font-family: Roboto;
   font-style: normal;
   font-weight: bold;
@@ -75,7 +75,7 @@ input.correct {
 input:focus {
   outline: none;
 }
-div.login-link {
+div.signup-link {
   display: inline-block;
   font-family: Roboto;
   font-style: normal;
@@ -83,11 +83,11 @@ div.login-link {
   font-size: 12px;
   line-height: 14px;
   text-align: center;
-  margin-left: 119px;
-  width: 40px;
+  margin-left: 99px;
+  width: 60px;
   height: 14px;
 }
-div.login-link a {
+div.signup-link a {
   margin-top: 10px;
   color: #2f80ed;
   text-decoration-line: underline;

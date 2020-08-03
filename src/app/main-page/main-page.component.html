@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="search-field">
+    <img src="/assets/youtube.svg" alt="">
+    <input type="text" placeholder="What do you want to find out" class="search-input" [(ngModel)]="searchString">
+    <button class="search-button" (click)="search()">Search</button>
+    <img src="/assets/settings.svg" class="settings-img" alt="">
+  </div>
+  <div class="settings">
+    <div style="color: #929292;">Sort by:</div>
+    <div style="color: #2f80ed; margin-left: 21px;">Date</div>
+    <div style="color: #2f80ed; margin-left: 21px;">Views</div>
+    <div style="color: #2f80ed; margin-left: 21px;">Word:</div>
+    <input type="text">
+  </div>
+</div>

@@ -1,0 +1,98 @@
+div.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #f2f2f2;
+}
+div.search-field {
+  text-align: center;
+  position: fixed;
+  width: 100vw;
+  height: 80px;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+div.settings {
+  text-align: center;
+  position: fixed;
+  width: 100vw;
+  height: 50px;
+  top: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+}
+div.settings input {
+  box-sizing: border-box;
+  padding-left: 8px;
+  border: none;
+  background-color: #EFEFEF;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  color: #929292;
+  margin-left: 5px;
+  width: 196px;
+  height: 24px;
+}
+div.settings input:focus {
+  outline: none;
+}
+div.search-field img {
+  margin-right: 10px;
+}
+input.search-input {
+  width: 396px;
+  height: 24px;
+  box-sizing: border-box;
+  padding-left: 8px;
+  border: none;
+  background-color: #EFEFEF;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  color: #929292;
+}
+input.search-input:focus {
+  outline: none;
+}
+button.search-button {
+  background: #2F80ED;
+  border-radius: 0px 4px 4px 0px;
+  width: 80px;
+  height: 24px;
+  color: #FFFFFF;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  border: none;
+}
+button.search-button:hover {
+  cursor: pointer;
+  box-shadow: 0 0 8px #2f80ed;
+}
+button.search-button:focus {
+  outline: none;
+}
+img.settings-img {
+  margin-left: 10px;
+}
+img.settings-img:hover {
+  cursor: pointer;
+}
