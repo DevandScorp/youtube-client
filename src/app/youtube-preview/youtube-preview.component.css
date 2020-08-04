@@ -1,0 +1,51 @@
+div.youtube-preview {
+  width: 303px;
+  height: 357px;
+  border-radius: 5px;
+  background-image: linear-gradient(
+    to bottom,
+    #e0e0e0,
+    #e0e0e0 98%,
+    #2f80ed 2%,
+    #2f80ed
+  );
+  margin: 5px;
+}
+img.youtube-preview-image {
+  width: 223px;
+  height: 123px;
+  margin-top: 20px;
+  margin-left: 19px;
+}
+div.icon-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 21px;
+}
+div.icon-container-item {
+  display: flex;
+  align-items: center;
+}
+div.icon-container-item img {
+  width: 20px;
+  height: 20px;
+  margin-right: 3px;
+}
+div.icon-container-item div {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 14px;
+}
+div.name {
+  text-align: center;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 23px;
+  color: #4f4f4f;
+  margin-top: 22px;
+}

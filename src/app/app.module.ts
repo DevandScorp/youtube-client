@@ -8,13 +8,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { HttpClientModule } from '@angular/common/http';
+import { YoutubePreviewComponent } from './youtube-preview/youtube-preview.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignUpComponent,
     LoginComponent,
-    MainPageComponent
+    MainPageComponent,
+    YoutubePreviewComponent
   ],
   imports: [
     BrowserModule,

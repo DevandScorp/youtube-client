@@ -6,6 +6,5 @@ export interface YoutubeElement {
   like_count: number;
   dislike_count: number;
   comment_count: number;
-  image_url_little: string;
-  image_url_big: string;
+  image_url: string;
 }

@@ -1,9 +1,11 @@
 div.container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* display: flex; */
+  /* align-items: center;
+  justify-content: center; */
+  flex-wrap: wrap;
   height: 100vh;
   background: #f2f2f2;
+
 }
 div.search-field {
   text-align: center;
@@ -29,7 +31,7 @@ div.settings {
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 14px;
 }
 div.settings input {
@@ -40,7 +42,7 @@ div.settings input {
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 14px;
   color: #929292;
   margin-left: 5px;
@@ -63,7 +65,7 @@ input.search-input {
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 14px;
   color: #929292;
 }
@@ -79,7 +81,7 @@ button.search-button {
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 14px;
   border: none;
 }
