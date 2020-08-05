@@ -18,40 +18,6 @@ div.search-field {
   align-items: center;
   background-color: white;
 }
-div.settings {
-  text-align: center;
-  position: fixed;
-  width: 100vw;
-  height: 50px;
-  top: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 14px;
-}
-div.settings input {
-  box-sizing: border-box;
-  padding-left: 8px;
-  border: none;
-  background-color: #EFEFEF;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 14px;
-  color: #929292;
-  margin-left: 5px;
-  width: 196px;
-  height: 24px;
-}
-div.settings input:focus {
-  outline: none;
-}
 div.search-field img {
   margin-right: 10px;
 }
@@ -91,10 +57,4 @@ button.search-button:hover {
 }
 button.search-button:focus {
   outline: none;
-}
-img.settings-img {
-  margin-left: 10px;
-}
-img.settings-img:hover {
-  cursor: pointer;
 }

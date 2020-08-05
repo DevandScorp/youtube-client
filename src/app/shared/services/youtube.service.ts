@@ -7,23 +7,32 @@ import {Observable} from 'rxjs';
 export class YoutubeService {
   constructor(private http: HttpClient) {}
 
-  searchVideoSnippet(searchString: string) {
+  /**
+   * Поиск сниппетов видео
+   * @param searchString - поисковая строка
+   * @param elementsAmount - количество элементов для поиска
+   */
+  searchVideoSnippet(searchString: string, elementsAmount: number): Observable<any> {
     return this.http.get<any>('https://www.googleapis.com/youtube/v3/search', {
       params: {
         key: environment.youtubeAPIKey,
         part: 'snippet',
-        q: searchString
+        q: searchString,
+        maxResults: elementsAmount + ''
       }
-    })
-
+    });
   }
-  getVideoStatistics(videoId: string) {
+  /**
+   * Получение статистики видео
+   * @param videoId - идентификатор видео
+   */
+  getVideoStatistics(videoId: string): Observable<any> {
     return this.http.get<any>('https://www.googleapis.com/youtube/v3/videos', {
       params: {
         key: environment.youtubeAPIKey,
         part: 'statistics',
         id: videoId
       }
-    })
+    });
   }
 }

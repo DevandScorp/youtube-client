@@ -5,12 +5,5 @@
     <button class="search-button" (click)="search()">Search</button>
     <img src="/assets/settings.svg" class="settings-img" alt="">
   </div>
-  <div class="settings">
-    <div style="color: #929292;">Sort by:</div>
-    <div style="color: #2f80ed; margin-left: 21px;">Date</div>
-    <div style="color: #2f80ed; margin-left: 21px;">Views</div>
-    <div style="color: #2f80ed; margin-left: 21px;">Word:</div>
-    <input type="text">
-  </div>
   <app-youtube-preview *ngFor="let youtubeElement of youtubeElements;" [youtubeElement]="youtubeElement"></app-youtube-preview>
 </div>
