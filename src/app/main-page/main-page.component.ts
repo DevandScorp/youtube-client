@@ -33,9 +33,10 @@ export class MainPageComponent implements OnInit {
      */
     const prevElementsAmount = this.elementsAmount;
     if (this.screenWidth > 1630) { this.elementsAmount = 5; }
-    if (this.screenWidth < 1630 && this.screenWidth > 1230) { this.elementsAmount = 4; }
-    if (this.screenWidth < 1230 && this.screenWidth > 890) { this.elementsAmount = 2; }
-    if (this.screenWidth < 890) { this.elementsAmount = 1; }
+    if (this.screenWidth < 1630 && this.screenWidth > 1300) { this.elementsAmount = 4; }
+    if (this.screenWidth < 1300 && this.screenWidth > 920) { this.elementsAmount = 3; }
+    if (this.screenWidth < 920 && this.screenWidth > 630) { this.elementsAmount = 2; }
+    if (this.screenWidth < 630) { this.elementsAmount = 1; }
     console.log(this.elementsAmount, prevElementsAmount)
     if (this.searchString && this.elementsAmount !== prevElementsAmount) { this.search(); }
 
