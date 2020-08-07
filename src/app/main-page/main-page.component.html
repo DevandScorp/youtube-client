@@ -1,9 +1,29 @@
+<app-alert></app-alert>
 <div class="container">
   <div class="search-field">
     <img src="/assets/youtube.svg" alt="">
-    <input type="text" placeholder="What do you want to find out" class="search-input" [(ngModel)]="searchString">
+    <div>
+      <input type="text" placeholder="What do you want to find out" class="search-input" [(ngModel)]="searchString"
+        (focus)="showSearchHistory = true" (blur)="showSearchHistory = false">
+      <div class="dropdown">
+        <div class="dropdown-child" [style.display]="showSearchHistory ? 'block' : 'none'">
+          <div>Подраздел 1</div>
+          <div>Подраздел 2</div>
+          <div>Подраздел 3</div>
+          <div>Подраздел 4</div>
+          <div>Подраздел 5</div>
+        </div>
+      </div>
+
+    </div>
     <button class="search-button" (click)="search()">Search</button>
-    <img src="/assets/settings.svg" class="settings-img" alt="">
   </div>
-  <app-youtube-preview *ngFor="let youtubeElement of youtubeElements;" [youtubeElement]="youtubeElement"></app-youtube-preview>
+  <div class="youtube-container" (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')">
+    <img *ngIf="!searchString" class="youtube-info-img" src="/assets/left-arrow.svg" alt="">
+    <div *ngIf="!searchString" class="youtube-info">
+      Swipe to move to the next/previous page
+    </div>
+    <img *ngIf="!searchString"  class="youtube-info-img" src="/assets/right-arrow.svg" alt="">
+    <app-youtube-preview *ngFor="let youtubeElement of youtubeElements;" [youtubeElement]="youtubeElement"></app-youtube-preview>
+  </div>
 </div>

@@ -1,11 +1,13 @@
 div.container {
+  height: 100vh;
+  background: #f2f2f2;
+}
+div.youtube-container {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   height: 100vh;
-  background: #f2f2f2;
-
 }
 div.search-field {
   text-align: center;
@@ -38,6 +40,19 @@ input.search-input {
 input.search-input:focus {
   outline: none;
 }
+img.youtube-info-img {
+  opacity: 0.5;
+  width: 80px;
+}
+div.youtube-info {
+  margin: 5px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 14px;
+  color: #929292;
+}
 button.search-button {
   background: #2F80ED;
   border-radius: 0px 4px 4px 0px;
@@ -57,4 +72,39 @@ button.search-button:hover {
 }
 button.search-button:focus {
   outline: none;
+}
+/**
+  dropdown
+**/
+.dropdown {
+  position: absolute;
+  top: 52px;
+  left: 40%;
+  display: inline-block;
+}
+.dropdown-child {
+  display: block;
+  background-color: white;
+
+  min-width: 200px;
+}
+.dropdown-child div {
+  border-right: #66a4f5 solid 3px;
+  border-left: #66a4f5 solid 3px;
+  color: white;
+  padding: 15px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 14px;
+  color: #6d6a6a;
+}
+.dropdown-child:last-child {
+  border-bottom: #66a4f5 solid 3px;
+  border-radius: 5px;
+}
+.dropdown-child div:hover {
+  cursor: pointer;
+  color: rgb(199, 189, 189);
 }

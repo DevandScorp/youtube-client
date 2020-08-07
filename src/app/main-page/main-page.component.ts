@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { YoutubeService } from '../shared/services/youtube.service';
 import { YoutubeElement } from '../shared/interfaces';
+import { AlertService } from '../shared/services/alert.service';
 
 @Component({
   selector: 'app-main-page',
@@ -13,11 +14,30 @@ export class MainPageComponent implements OnInit {
   elementsAmount: number;
   youtubeElements: YoutubeElement[];
   screenWidth: number;
-  constructor(private youtubeService: YoutubeService) { }
+  showSearchHistory: boolean = false;
+  swipeCoord: number[];
+
+  constructor(private youtubeService: YoutubeService,
+    private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
     this.setSize();
+  }
+  editShowSearchHistory() {
+    this.showSearchHistory = !this.showSearchHistory;
+    console.log('here');
+  }
+  swipe(event: TouchEvent, when: string) {
+    const coord: [number, number] = [event.changedTouches[0].clientX, event.changedTouches[0].clientY];
+    const time = new Date().getTime();
+
+    if (when === 'start') {
+      this.swipeCoord = coord;
+    } else if (when === 'end') {
+      const direction = [coord[0] - this.swipeCoord[0], coord[1] - this.swipeCoord[1]];
+      if (Math.abs(direction[0]) > Math.abs(direction[1] * 3)) { const swipe = direction[0] < 0 ? 'next' : 'previous'; }
+    }
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -32,31 +52,28 @@ export class MainPageComponent implements OnInit {
      * Сохраняю предыдущее количество элементов, чтобы не перерисовывать постоянно
      */
     const prevElementsAmount = this.elementsAmount;
-    if (this.screenWidth > 1630) { this.elementsAmount = 5; }
-    if (this.screenWidth < 1630 && this.screenWidth > 1300) { this.elementsAmount = 4; }
-    if (this.screenWidth < 1300 && this.screenWidth > 920) { this.elementsAmount = 3; }
-    if (this.screenWidth < 920 && this.screenWidth > 630) { this.elementsAmount = 2; }
-    if (this.screenWidth < 630) { this.elementsAmount = 1; }
+    this.elementsAmount = Math.floor(this.screenWidth / 320);
     console.log(this.elementsAmount, prevElementsAmount)
     if (this.searchString && this.elementsAmount !== prevElementsAmount) { this.search(); }
 
   }
   search() {
-    this.youtubeService.searchVideoSnippet(this.searchString, this.elementsAmount)
+    this.alertService.success('success');
+    this.youtubeService.searchVideoSnippet(this.searchString || '', this.elementsAmount)
       .subscribe(async response => {
         const youtubeVideoSnippets = response.items;
         const youtubeElements: YoutubeElement[] = [];
         for (const youtubeVideoSnippet of youtubeVideoSnippets) {
           const { items } = await this.youtubeService.getVideoStatistics(youtubeVideoSnippet.id.videoId).toPromise();
-          const statistics = items[0].statistics;
+          const statistics = items[0]?.statistics;
+          console.log(statistics);
           youtubeElements.push({
             name: youtubeVideoSnippet.snippet.title,
-            description: youtubeVideoSnippet.snippet.description,
             creation_date: new Date(youtubeVideoSnippet.snippet.publishedAt),
-            view_count: +statistics.viewCount,
-            like_count: +statistics.likeCount,
-            dislike_count: +statistics.dislikeCount,
-            comment_count: +statistics.commentCount,
+            view_count: statistics ? +statistics.viewCount : 0,
+            like_count: statistics ? +statistics.likeCount : 0,
+            dislike_count: statistics ? +statistics.dislikeCount : 0,
+            comment_count: statistics ? +statistics.commentCount : 0,
             image_url: youtubeVideoSnippet.snippet.thumbnails.high.url
           });
         }
