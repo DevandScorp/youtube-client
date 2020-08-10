@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { AlertService } from '../../services/alert.service';
 import { Subscription } from 'rxjs';
 
@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.css']
 })
-export class AlertComponent implements OnInit {
+export class AlertComponent implements OnInit, OnDestroy {
 
   @Input() delay = 5000;
 
@@ -25,10 +25,10 @@ export class AlertComponent implements OnInit {
 
       setTimeout(() => {
         this.text = '';
-      }, this.delay)
-    })
+      }, this.delay);
+    });
   }
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.alertSubscription) {
       this.alertSubscription.unsubscribe();
     }

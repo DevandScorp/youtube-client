@@ -10,6 +10,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { YoutubePreviewComponent } from './youtube-preview/youtube-preview.component';
 import { AlertComponent } from './shared/components/alert/alert.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AlertComponent } from './shared/components/alert/alert.component';
     LoginComponent,
     MainPageComponent,
     YoutubePreviewComponent,
-    AlertComponent
+    AlertComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,

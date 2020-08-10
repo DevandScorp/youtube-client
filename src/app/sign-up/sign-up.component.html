@@ -1,42 +1,6 @@
 <div class="container">
   <form [formGroup]="form" (ngSubmit)="submit()" class="sign-up">
     <div class="registration">Registration</div>
-    <div class="form-field-name" style="margin-top: 22px;">First Name</div>
-    <input
-      type="text"
-      class="form-field"
-      formControlName="firstName"
-      [ngClass]="{
-        wrong: form.get('firstName').touched && form.get('firstName').invalid,
-        correct: form.get('firstName').touched && form.get('firstName').valid
-      }"
-    />
-    <div
-      *ngIf="form.get('firstName').touched && form.get('firstName').invalid"
-      class="validation"
-    >
-      <small *ngIf="form.get('firstName').errors.required">
-        Имя не должно быть пустым
-      </small>
-    </div>
-    <div class="form-field-name" style="margin-top: 14px;">Last Name</div>
-    <input
-      type="text"
-      class="form-field"
-      formControlName="lastName"
-      [ngClass]="{
-        wrong: form.get('lastName').touched && form.get('lastName').invalid,
-        correct: form.get('lastName').touched && form.get('lastName').valid
-      }"
-    />
-    <div
-      *ngIf="form.get('lastName').touched && form.get('lastName').invalid"
-      class="validation"
-    >
-      <small *ngIf="form.get('lastName').errors.required">
-        Фамилия не должна быть пустой
-      </small>
-    </div>
     <div class="form-field-name" style="margin-top: 14px;">Email</div>
     <input
       type="text"
@@ -80,10 +44,24 @@
       </small>
     </div>
     <div class="login-link">
-      <a href="">Login</a>
+      <a routerLink="/login">Login</a>
     </div>
-    <button type="submit" class="submit" [disabled]="form.invalid">
-      Submit
+    <button
+      type="submit"
+      class="submit"
+      [disabled]="form.invalid"
+      *ngIf="preloader; else signUpBlock"
+    >
+      <img src="/assets/preloader-button.gif" alt="" />
     </button>
+    <ng-template #signUpBlock>
+      <button
+        type="submit"
+        class="submit"
+        [disabled]="form.invalid"
+      >
+        Sign Up
+      </button>
+    </ng-template>
   </form>
 </div>

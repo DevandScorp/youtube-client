@@ -12,13 +12,14 @@ export class YoutubeService {
    * @param searchString - поисковая строка
    * @param elementsAmount - количество элементов для поиска
    */
-  searchVideoSnippet(searchString: string, elementsAmount: number): Observable<any> {
+  searchVideoSnippet(searchString: string, elementsAmount: number, pageToken?: string): Observable<any> {
     return this.http.get<any>('https://www.googleapis.com/youtube/v3/search', {
       params: {
         key: environment.youtubeAPIKey,
         part: 'snippet',
         q: searchString,
-        maxResults: elementsAmount + ''
+        maxResults: elementsAmount + '',
+        pageToken: pageToken || ''
       }
     });
   }

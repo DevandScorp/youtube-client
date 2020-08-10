@@ -1,12 +1,28 @@
 <app-alert></app-alert>
-<div class="container">
+<div
+  class="container"
+  (touchstart)="swipe($event, 'start')"
+  (touchend)="swipe($event, 'end')"
+  (mousedown)="swipeMouse($event, 'start')"
+  (mouseup)="swipeMouse($event, 'end')"
+  (keydown.enter)="search()"
+>
   <div class="search-field">
-    <img src="/assets/youtube.svg" alt="">
+    <img src="/assets/youtube.svg" alt="" />
     <div>
-      <input type="text" placeholder="What do you want to find out" class="search-input" [(ngModel)]="searchString"
-        (focus)="showSearchHistory = true" (blur)="showSearchHistory = false">
+      <input
+        type="text"
+        placeholder="What do you want to find out"
+        class="search-input"
+        [(ngModel)]="searchString"
+        (focus)="showSearchHistory = true"
+        (blur)="showSearchHistory = false"
+      />
       <div class="dropdown">
-        <div class="dropdown-child" [style.display]="showSearchHistory ? 'block' : 'none'">
+        <div
+          class="dropdown-child"
+          [style.display]="showSearchHistory ? 'block' : 'none'"
+        >
           <div>Подраздел 1</div>
           <div>Подраздел 2</div>
           <div>Подраздел 3</div>
@@ -14,16 +30,36 @@
           <div>Подраздел 5</div>
         </div>
       </div>
-
     </div>
     <button class="search-button" (click)="search()">Search</button>
   </div>
-  <div class="youtube-container" (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')">
-    <img *ngIf="!searchString" class="youtube-info-img" src="/assets/left-arrow.svg" alt="">
+  <div class="youtube-container">
+    <img
+      src="/assets/preloader.gif"
+      *ngIf="preloader"
+      class="youtube-preloader-img"
+      alt=""
+    />
+    <img
+      *ngIf="!searchString"
+      class="youtube-info-img"
+      src="/assets/left-arrow.svg"
+      alt=""
+    />
     <div *ngIf="!searchString" class="youtube-info">
       Swipe to move to the next/previous page
     </div>
-    <img *ngIf="!searchString"  class="youtube-info-img" src="/assets/right-arrow.svg" alt="">
-    <app-youtube-preview *ngFor="let youtubeElement of youtubeElements;" [youtubeElement]="youtubeElement"></app-youtube-preview>
+    <img
+      *ngIf="!searchString"
+      class="youtube-info-img"
+      src="/assets/right-arrow.svg"
+      alt=""
+    />
+    <ng-container *ngIf="!preloader">
+      <app-youtube-preview
+        *ngFor="let youtubeElement of youtubeElements"
+        [youtubeElement]="youtubeElement"
+      ></app-youtube-preview>
+    </ng-container>
   </div>
 </div>

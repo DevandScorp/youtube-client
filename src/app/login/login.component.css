@@ -85,10 +85,10 @@ div.signup-link {
   text-align: center;
   margin-left: 95px;
   width: 60px;
-  height: 14px;
+  height: 20px;
 }
 div.signup-link a {
-  margin-top: 10px;
+  margin-bottom: 5px;
   color: #2f80ed;
   text-decoration-line: underline;
 }
@@ -111,6 +111,11 @@ button.submit {
   color: #ffffff;
   border: none;
   box-shadow: 0 0 4px #2f80ed;
+  outline: none;
+}
+button.submit img {
+  width: 15px;
+  height: 15px;
 }
 button.submit:hover {
   cursor: pointer;

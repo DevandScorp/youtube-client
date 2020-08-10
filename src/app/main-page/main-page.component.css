@@ -108,3 +108,7 @@ button.search-button:focus {
   cursor: pointer;
   color: rgb(199, 189, 189);
 }
+img.youtube-preloader-img {
+  width: 100px;
+  height: 100px;
+}

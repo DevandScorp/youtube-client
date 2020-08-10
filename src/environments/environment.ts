@@ -4,13 +4,14 @@
 
 export const environment = {
   production: false,
-  youtubeAPIKey: 'AIzaSyDW9T7_AfROHlbmMbftkDngcI7yrvXi4BI'
+  youtubeAPIKey: 'AIzaSyDW9T7_AfROHlbmMbftkDngcI7yrvXi4BI',
+  firebaseAPIKey: 'AIzaSyDBfGFQ4rOYJTWZgceS_24CdASVTCXQ1zY',
+  firebaseDatabaseUrl: 'https://psyched-metrics-254211.firebaseio.com'
 };
 
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */

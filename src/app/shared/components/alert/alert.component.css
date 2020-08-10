@@ -2,10 +2,32 @@
     position: fixed;
     z-index: 9999;
     top: 50px;
-    right: 40px;
-    width: 200px;
+    right: 0;
 }
 .alert-success {
-    color: white;
-    background-color: greenyellow;
+    max-width: 200px;
+    background: #19A974;
+    color: #FFFFFF;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 14px;
+    padding: 15px;
+    border-radius: 4px 0px 0px 4px;
+    border-left: #4bcf9f solid 10px;
+}
+
+.alert-error {
+  max-width: 200px;
+  background: #ff0000;
+  color: #FFFFFF;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 14px;
+  padding: 15px;
+  border-radius: 4px 0px 0px 4px;
+  border-left: #ff3737 solid 10px;
 }

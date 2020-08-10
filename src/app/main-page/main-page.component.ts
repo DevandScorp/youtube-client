@@ -14,9 +14,12 @@ export class MainPageComponent implements OnInit {
   elementsAmount: number;
   youtubeElements: YoutubeElement[];
   screenWidth: number;
-  showSearchHistory: boolean = false;
+  showSearchHistory = false;
+  preloader = false;
   swipeCoord: number[];
-
+  swipeDirection: string;
+  nextPageToken: string;
+  prevPageToken: string;
   constructor(private youtubeService: YoutubeService,
     private alertService: AlertService) { }
 
@@ -24,49 +27,72 @@ export class MainPageComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     this.setSize();
   }
-  editShowSearchHistory() {
+  editShowSearchHistory(): void {
     this.showSearchHistory = !this.showSearchHistory;
-    console.log('here');
   }
-  swipe(event: TouchEvent, when: string) {
-    const coord: [number, number] = [event.changedTouches[0].clientX, event.changedTouches[0].clientY];
-    const time = new Date().getTime();
-
+  swipeMouse(event: MouseEvent, when: string): void {
+    const coord: [number, number] = [event.clientX, event.clientY];
     if (when === 'start') {
       this.swipeCoord = coord;
     } else if (when === 'end') {
       const direction = [coord[0] - this.swipeCoord[0], coord[1] - this.swipeCoord[1]];
-      if (Math.abs(direction[0]) > Math.abs(direction[1] * 3)) { const swipe = direction[0] < 0 ? 'next' : 'previous'; }
+      if (Math.abs(direction[0]) > Math.abs(direction[1] * 3)) {
+        this.swipeDirection = direction[0] < 0 ? 'next' : 'previous';
+        if (this.searchString) {
+          this.search();
+        }
+      }
+    }
+  }
+  swipe(event: TouchEvent, when: string): void {
+    const coord: [number, number] = [event.changedTouches[0].clientX, event.changedTouches[0].clientY];
+    if (when === 'start') {
+      this.swipeCoord = coord;
+    } else if (when === 'end') {
+      const direction = [coord[0] - this.swipeCoord[0], coord[1] - this.swipeCoord[1]];
+      if (Math.abs(direction[0]) > Math.abs(direction[1] * 3)) {
+        this.swipeDirection = direction[0] < 0 ? 'next' : 'previous';
+        if (this.searchString) {
+          this.search();
+        }
+      }
     }
   }
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize(event): void {
     this.screenWidth = window.innerWidth;
     this.setSize();
   }
   /**
    * Определяет размер выдаваемых результатов поиска и перезапрашивает данные
    */
-  setSize() {
+  setSize(): void {
     /**
      * Сохраняю предыдущее количество элементов, чтобы не перерисовывать постоянно
      */
     const prevElementsAmount = this.elementsAmount;
     this.elementsAmount = Math.floor(this.screenWidth / 320);
-    console.log(this.elementsAmount, prevElementsAmount)
     if (this.searchString && this.elementsAmount !== prevElementsAmount) { this.search(); }
 
   }
-  search() {
-    this.alertService.success('success');
-    this.youtubeService.searchVideoSnippet(this.searchString || '', this.elementsAmount)
+  search(): void {
+    if (!this.searchString) { return; }
+    let pageToken;
+    if (this.swipeDirection === 'next') {
+      pageToken = this.nextPageToken;
+    } else if (this.swipeDirection === 'previous') {
+      pageToken = this.prevPageToken;
+    }
+    this.preloader = true;
+    this.youtubeService.searchVideoSnippet(this.searchString, this.elementsAmount, pageToken)
       .subscribe(async response => {
+        this.nextPageToken = response.nextPageToken || '';
+        this.prevPageToken = response.prevPageToken || '';
         const youtubeVideoSnippets = response.items;
         const youtubeElements: YoutubeElement[] = [];
         for (const youtubeVideoSnippet of youtubeVideoSnippets) {
           const { items } = await this.youtubeService.getVideoStatistics(youtubeVideoSnippet.id.videoId).toPromise();
           const statistics = items[0]?.statistics;
-          console.log(statistics);
           youtubeElements.push({
             name: youtubeVideoSnippet.snippet.title,
             creation_date: new Date(youtubeVideoSnippet.snippet.publishedAt),
@@ -77,8 +103,8 @@ export class MainPageComponent implements OnInit {
             image_url: youtubeVideoSnippet.snippet.thumbnails.high.url
           });
         }
+        this.preloader = false;
         this.youtubeElements = youtubeElements;
-        console.log(this.youtubeElements);
       });
   }
 

@@ -13,3 +13,12 @@ export interface Alert {
   type: AlertType;
   text: string;
 }
+export interface User {
+  email: string;
+  password: string;
+  returnSecureToken?: boolean;
+}
+export interface FirebaseAuthorizationResponse {
+  idToken: string;
+  expiresIn: string;
+}
