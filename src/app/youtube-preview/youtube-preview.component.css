@@ -10,12 +10,12 @@ div.youtube-preview {
     #2f80ed
   );
   margin: 5px;
+  text-align: center;
 }
 img.youtube-preview-image {
   width: 223px;
   height: 123px;
   margin-top: 20px;
-  margin-left: 19px;
 }
 div.icon-container {
   display: flex;

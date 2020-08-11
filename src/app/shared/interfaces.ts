@@ -21,4 +21,10 @@ export interface User {
 export interface FirebaseAuthorizationResponse {
   idToken: string;
   expiresIn: string;
+  localId: string;
+}
+
+export interface HistoryElement {
+  query: string;
+  localId: string;
 }

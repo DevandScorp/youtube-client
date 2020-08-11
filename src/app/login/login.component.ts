@@ -19,9 +19,9 @@ export class LoginComponent implements OnInit {
   preloader = false;
 
   constructor(private authorizationService: AuthorizationService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private alertService: AlertService) { }
+              private router: Router,
+              private route: ActivatedRoute,
+              private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({

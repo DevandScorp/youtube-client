@@ -1,7 +1,12 @@
+import { AuthorizationService } from './../shared/services/authorization.service';
+import { HistoryService } from './../shared/services/history.service';
 import { Component, OnInit, HostListener } from '@angular/core';
 import { YoutubeService } from '../shared/services/youtube.service';
-import { YoutubeElement } from '../shared/interfaces';
+import { YoutubeElement, HistoryElement } from '../shared/interfaces';
 import { AlertService } from '../shared/services/alert.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main-page',
@@ -20,15 +25,31 @@ export class MainPageComponent implements OnInit {
   swipeDirection: string;
   nextPageToken: string;
   prevPageToken: string;
+  historyElements: HistoryElement[];
+  historyPreloader = false;
+
   constructor(private youtubeService: YoutubeService,
-    private alertService: AlertService) { }
+              private alertService: AlertService,
+              private authorizationService: AuthorizationService,
+              private historyService: HistoryService) { }
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
     this.setSize();
+    this.historyPreloader = true;
+    this.historyService.getHistoryElements()
+      .pipe(catchError(this.handleHisotryError.bind(this)))
+      .subscribe(result => {
+        // tslint:disable-next-line: max-line-length
+        this.historyElements = this.authorizationService.localId ? result.filter(element => element.localId === this.authorizationService.localId) : result;
+        this.historyPreloader = false;
+        console.log(result);
+      });
   }
-  editShowSearchHistory(): void {
-    this.showSearchHistory = !this.showSearchHistory;
+  setSearchHistory(query: string): void {
+    this.searchString = query;
+    this.swipeDirection = '';
+    this.search();
   }
   swipeMouse(event: MouseEvent, when: string): void {
     const coord: [number, number] = [event.clientX, event.clientY];
@@ -75,6 +96,18 @@ export class MainPageComponent implements OnInit {
     if (this.searchString && this.elementsAmount !== prevElementsAmount) { this.search(); }
 
   }
+  private handleHisotryError(error: HttpErrorResponse): Observable<any> {
+    if (error.message) { this.alertService.error(error.message); }
+    console.log(error);
+    this.historyPreloader = false;
+    return throwError(error);
+  }
+  private handleYoutubeError(error: HttpErrorResponse): Observable<any> {
+    if (error.message) { this.alertService.error(error.message); }
+    console.log(error);
+    this.preloader = false;
+    return throwError(error);
+  }
   search(): void {
     if (!this.searchString) { return; }
     let pageToken;
@@ -85,6 +118,7 @@ export class MainPageComponent implements OnInit {
     }
     this.preloader = true;
     this.youtubeService.searchVideoSnippet(this.searchString, this.elementsAmount, pageToken)
+      .pipe(catchError(this.handleYoutubeError.bind(this)))
       .subscribe(async response => {
         this.nextPageToken = response.nextPageToken || '';
         this.prevPageToken = response.prevPageToken || '';
@@ -100,11 +134,20 @@ export class MainPageComponent implements OnInit {
             like_count: statistics ? +statistics.likeCount : 0,
             dislike_count: statistics ? +statistics.dislikeCount : 0,
             comment_count: statistics ? +statistics.commentCount : 0,
-            image_url: youtubeVideoSnippet.snippet.thumbnails.high.url
+            image_url: youtubeVideoSnippet.snippet.thumbnails.high.url || '/assets/not-found.svg'
           });
         }
         this.preloader = false;
         this.youtubeElements = youtubeElements;
+        console.log(this.swipeDirection);
+        if (!this.swipeDirection) {
+          const historyElement: HistoryElement = { query: this.searchString, localId: this.authorizationService.localId };
+          this.historyService.createHistoryElement(historyElement).subscribe((result) => {
+            if (!this.historyElements.length) { this.historyElements = []; }
+            this.historyElements.push({ query: this.searchString, localId: this.authorizationService.localId });
+          });
+        }
+        this.swipeDirection = '';
       });
   }
 

@@ -85,8 +85,15 @@ button.search-button:focus {
 .dropdown-child {
   display: block;
   background-color: white;
-
+  max-height: 400px;
+  overflow-y: scroll;
   min-width: 200px;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.dropdown-child::-webkit-scrollbar {
+  display: none;
 }
 .dropdown-child div {
   border-right: #66a4f5 solid 3px;
@@ -99,10 +106,6 @@ button.search-button:focus {
   font-size: 14px;
   line-height: 14px;
   color: #6d6a6a;
-}
-.dropdown-child:last-child {
-  border-bottom: #66a4f5 solid 3px;
-  border-radius: 5px;
 }
 .dropdown-child div:hover {
   cursor: pointer;

@@ -23,11 +23,14 @@
           class="dropdown-child"
           [style.display]="showSearchHistory ? 'block' : 'none'"
         >
-          <div>Подраздел 1</div>
-          <div>Подраздел 2</div>
-          <div>Подраздел 3</div>
-          <div>Подраздел 4</div>
-          <div>Подраздел 5</div>
+          <img
+            src="/assets/preloader.gif"
+            class="youtube-preloader-img"
+            style="width: 40px; height: 40px;"
+            *ngIf="historyPreloader"
+            alt=""
+          />
+          <div *ngFor="let historyElement of historyElements | filterHistory:searchString" (mousedown)="setSearchHistory(historyElement.query)">{{ historyElement.query }}</div>
         </div>
       </div>
     </div>
@@ -55,7 +58,7 @@
       src="/assets/right-arrow.svg"
       alt=""
     />
-    <ng-container *ngIf="!preloader">
+    <ng-container *ngIf="!preloader && searchString">
       <app-youtube-preview
         *ngFor="let youtubeElement of youtubeElements"
         [youtubeElement]="youtubeElement"

@@ -11,7 +11,7 @@ export class AuthorizationService {
 
   token: string;
   expireDate: Date;
-
+  localId: string;
   constructor(private http: HttpClient, private alertService: AlertService) { }
 
   isAuthorized(): boolean {
@@ -70,6 +70,7 @@ export class AuthorizationService {
     if (response) {
       this.token = response.idToken;
       this.expireDate = new Date(new Date().getTime() + +response.expiresIn * 1000);
+      this.localId = response.localId;
     } else {
       this.token = null;
       this.expireDate = null;
