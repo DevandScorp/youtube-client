@@ -110,6 +110,11 @@ button.search-button:focus {
 .dropdown-child::-webkit-scrollbar {
   display: none;
 }
+.last-child{
+  border-bottom: #66a4f5 solid 3px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
 .dropdown-child div {
   border-right: #66a4f5 solid 3px;
   border-left: #66a4f5 solid 3px;
