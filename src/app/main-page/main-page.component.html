@@ -30,11 +30,14 @@
             *ngIf="historyPreloader"
             alt=""
           />
-          <div *ngFor="let historyElement of historyElements | filterHistory:searchString" (mousedown)="setSearchHistory(historyElement.query)">{{ historyElement.query }}</div>
+          <div
+          *ngFor="let historyElement of historyElements | filterHistory:searchString"
+           (mousedown)="setSearchHistory(historyElement.query)">{{ historyElement.query }}</div>
         </div>
       </div>
     </div>
     <button class="search-button" (click)="search()">Search</button>
+    <img class="logout" src="/assets/logout.svg" alt="" (click)="logout()"/>
   </div>
   <div class="youtube-container">
     <img

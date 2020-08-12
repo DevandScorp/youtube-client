@@ -22,6 +22,7 @@ div.search-field {
 }
 div.search-field img {
   margin-right: 10px;
+  margin-left: 10px;
 }
 input.search-input {
   width: 396px;
@@ -36,6 +37,17 @@ input.search-input {
   font-size: 14px;
   line-height: 14px;
   color: #929292;
+}
+@media only screen and (max-width: 630px) {
+  input.search-input {
+    width: 50vw;
+  }
+  img.youtube-info-img {
+    display: none;
+  }
+  .dropdown {
+    left: 0;
+  }
 }
 input.search-input:focus {
   outline: none;
@@ -52,6 +64,9 @@ div.youtube-info {
   font-size: 14px;
   line-height: 14px;
   color: #929292;
+}
+img.logout:hover {
+  cursor: pointer;
 }
 button.search-button {
   background: #2F80ED;

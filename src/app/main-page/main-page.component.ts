@@ -7,6 +7,7 @@ import { AlertService } from '../shared/services/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-page',
@@ -31,6 +32,7 @@ export class MainPageComponent implements OnInit {
   constructor(private youtubeService: YoutubeService,
               private alertService: AlertService,
               private authorizationService: AuthorizationService,
+              private router: Router,
               private historyService: HistoryService) { }
 
   ngOnInit(): void {
@@ -45,6 +47,10 @@ export class MainPageComponent implements OnInit {
         this.historyPreloader = false;
         console.log(result);
       });
+  }
+  logout() {
+    this.authorizationService.logout();
+    this.router.navigate(['/login']);
   }
   setSearchHistory(query: string): void {
     this.searchString = query;
