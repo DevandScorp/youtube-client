@@ -9,26 +9,26 @@ import { catchError, tap } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class AuthorizationService {
 
-  token: string;
   expireDate: Date;
-  localId: string;
   constructor(private http: HttpClient, private alertService: AlertService) { }
 
   isAuthorized(): boolean {
     return !!this.token;
   }
-  getToken(): string {
-    const expireDate = new Date(this.expireDate);
-    if (new Date() > expireDate) {
+  get localId(): string {
+    return localStorage.getItem('firebase-local-id');
+  }
+  get token(): string {
+    const expDate = new Date(localStorage.getItem('firebase-expire-date'));
+    if (new Date() > expDate) {
       this.logout();
       return null;
     }
-    return this.token;
+    return localStorage.getItem('firebase-token');
   }
 
   logout(): void {
-    this.token = null;
-    this.expireDate = null;
+    this.setToken(null);
   }
 
   login(user: User): Observable<any> {
@@ -68,12 +68,12 @@ export class AuthorizationService {
   }
   private setToken(response: FirebaseAuthorizationResponse | null): void {
     if (response) {
-      this.token = response.idToken;
-      this.expireDate = new Date(new Date().getTime() + +response.expiresIn * 1000);
-      this.localId = response.localId;
+      const expDate = new Date(new Date().getTime() + +response.expiresIn * 1000)
+      localStorage.setItem('firebase-token', response.idToken);
+      localStorage.setItem('firebase-expire-date', expDate.toString());
+      localStorage.setItem('firebase-local-id', response.localId);
     } else {
-      this.token = null;
-      this.expireDate = null;
+      localStorage.clear();
     }
   }
   signUp(user: User): Observable<any> {

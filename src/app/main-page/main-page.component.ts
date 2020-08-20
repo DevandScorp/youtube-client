@@ -136,10 +136,10 @@ export class MainPageComponent implements OnInit {
           youtubeElements.push({
             name: youtubeVideoSnippet.snippet.title,
             creation_date: new Date(youtubeVideoSnippet.snippet.publishedAt),
-            view_count: statistics ? +statistics.viewCount : 0,
-            like_count: statistics ? +statistics.likeCount : 0,
-            dislike_count: statistics ? +statistics.dislikeCount : 0,
-            comment_count: statistics ? +statistics.commentCount : 0,
+            view_count: statistics ? +statistics.viewCount || 0 : 0,
+            like_count: statistics ? +statistics.likeCount || 0 : 0,
+            dislike_count: statistics ? +statistics.dislikeCount || 0 : 0,
+            comment_count: statistics ? +statistics.commentCount || 0 : 0,
             image_url: youtubeVideoSnippet.snippet.thumbnails.high.url || '/assets/not-found.svg'
           });
         }
