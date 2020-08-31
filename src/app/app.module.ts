@@ -1,7 +1,5 @@
-import { FilterHistoryPipe } from './shared/pipes/filterHistory.pipe';
-import { AuthorizationInterceptor } from './shared/authorization.interceptor';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, Provider } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,16 +9,12 @@ import { LoginComponent } from './login/login.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { YoutubePreviewComponent } from './youtube-preview/youtube-preview.component';
-import { AlertComponent } from './shared/components/alert/alert.component';
-import { ErrorPageComponent } from './error-page/error-page.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core/core.module';
 
-const INTERCEPTOR_PROVIDER: Provider = {
-  provide: HTTP_INTERCEPTORS,
-  multi: true,
-  useClass: AuthorizationInterceptor
-}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,11 +22,10 @@ const INTERCEPTOR_PROVIDER: Provider = {
     LoginComponent,
     MainPageComponent,
     YoutubePreviewComponent,
-    AlertComponent,
-    ErrorPageComponent,
-    FilterHistoryPipe
   ],
   imports: [
+    SharedModule,
+    CoreModule.forRoot(),
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,
@@ -40,7 +33,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [INTERCEPTOR_PROVIDER],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

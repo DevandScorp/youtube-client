@@ -1,5 +1,5 @@
-import { AuthorizationGuard } from './shared/authorization.guard';
-import { ErrorPageComponent } from './error-page/error-page.component';
+import { AuthorizationGuard } from './core/authorization.guard';
+import { ErrorPageComponent } from './shared/components/error-page/error-page.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { LoginComponent } from './login/login.component';

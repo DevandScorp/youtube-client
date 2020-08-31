@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Subject } from 'rxjs';
-import { Alert } from '../interfaces';
+import { Alert } from '../../interfaces';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AlertService {
     public alert$ = new Subject<Alert>();
 

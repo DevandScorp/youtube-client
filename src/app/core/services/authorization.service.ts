@@ -1,12 +1,12 @@
 import { AlertService } from './alert.service';
-import { User, FirebaseAuthorizationResponse } from './../interfaces';
+import { User, FirebaseAuthorizationResponse } from '../../interfaces';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AuthorizationService {
 
   expireDate: Date;

@@ -1,8 +1,8 @@
-import { AlertService } from './../shared/services/alert.service';
-import { AuthorizationService } from './../shared/services/authorization.service';
+import { AlertService } from '../core/services/alert.service';
+import { AuthorizationService } from '../core/services/authorization.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from '../shared/interfaces';
+import { User } from '../interfaces';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
