@@ -21,60 +21,7 @@ div.login {
   margin-top: 30px;
   color: #000000;
 }
-div.form-field-name {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 14px;
-  color: #828282;
-  margin-left: 26px;
-}
-input.form-field {
-  box-sizing: border-box;
-  padding-left: 8px;
-  background: #e0e0e0;
-  border: none;
-  border-radius: 0px 0px 5px 5px;
-  margin-top: 3.4px;
-  margin-left: 20px;
-  width: 304px;
-  height: 33.6px;
-}
-div.validation {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 12px;
-  color: #eb5757;
-  margin-left: 26px;
-}
-input.wrong {
-  background-image: linear-gradient(
-    to bottom,
-    #e0e0e0,
-    #e0e0e0 80%,
-    #eb5757 20%,
-    #eb5757
-  );
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-input.correct {
-  background-image: linear-gradient(
-    to bottom,
-    #e0e0e0,
-    #e0e0e0 80%,
-    #19A974 20%,
-    #19A974
-  );
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-input:focus {
-  outline: none;
-}
+
 div.signup-link {
   display: inline-block;
   font-family: Roboto;
