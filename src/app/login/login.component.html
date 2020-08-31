@@ -10,17 +10,19 @@
         wrong: form.get('email').touched && form.get('email').invalid,
         correct: form.get('email').touched && form.get('email').valid
       }"
+      validation
     />
     <div
       *ngIf="form.get('email').touched && form.get('email').invalid"
       class="validation"
     >
-      <small *ngIf="form.get('email').errors.email">
-        Неверный формат электронной почты
+    Неверный формат электронной почты
+      <!-- <small *ngIf="form.get('email').errors.email">
+        
       </small>
       <small *ngIf="form.get('email').errors.required">
         Электронная почта не должна быть пустой
-      </small>
+      </small> -->
     </div>
     <div class="form-field-name" style="margin-top: 14px;">Password</div>
     <input
