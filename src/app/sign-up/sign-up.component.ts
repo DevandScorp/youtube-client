@@ -1,7 +1,7 @@
 import { AlertService } from '../core/services/alert.service';
 import { AuthorizationService } from '../core/services/authorization.service';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, Form } from '@angular/forms';
 import { User } from '../interfaces';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
@@ -19,15 +19,16 @@ export class SignUpComponent implements OnInit {
 
   constructor(private authorizationService: AuthorizationService,
     private alertService: AlertService,
-    private router: Router) { }
+    private router: Router,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+    this.form = this.formBuilder.group({
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, Validators.minLength(6)]],
     });
   }
-  private handleError(error: HttpErrorResponse): Observable<any> {
+  private _handleError(error: HttpErrorResponse): Observable<any> {
     this.preloader = false;
     return throwError(error);
   }
@@ -39,11 +40,11 @@ export class SignUpComponent implements OnInit {
     };
     this.preloader = true;
     this.authorizationService.signUp(user)
-      .pipe(catchError(this.handleError.bind(this)))
+      .pipe(catchError(this._handleError.bind(this)))
       .subscribe(() => {
         this.alertService.success('Вы успешно зарегистрировались в системе');
         this.form.reset();
-        this.router.navigate(['/login']);
+        this.router.navigateByUrl('/login');
       });
   }
 }

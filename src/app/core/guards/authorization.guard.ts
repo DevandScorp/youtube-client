@@ -10,7 +10,7 @@ export class AuthorizationGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> | boolean {
     if (!this.authorizationService.isAuthorized()) {
       this.authorizationService.logout();
-      return this.router.navigate(['/login'], {
+      return this.router.navigateByUrl('/login', {
         queryParams: {
           isAuthorized: false
         }

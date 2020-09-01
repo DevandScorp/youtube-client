@@ -13,12 +13,12 @@ export class AuthorizationService {
   constructor(private http: HttpClient, private alertService: AlertService) { }
 
   isAuthorized(): boolean {
-    return !!this.token;
+    return !!this.getToken();
   }
-  get localId(): string {
+  getLocalId(): string {
     return localStorage.getItem('firebase-local-id');
   }
-  get token(): string {
+  getToken(): string {
     const expDate = new Date(localStorage.getItem('firebase-expire-date'));
     if (new Date() > expDate) {
       this.logout();
@@ -28,19 +28,19 @@ export class AuthorizationService {
   }
 
   logout(): void {
-    this.setToken(null);
+    this._setToken(null);
   }
 
   login(user: User): Observable<any> {
     user.returnSecureToken = true;
     return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseAPIKey}`, user)
       .pipe(
-        tap(this.setToken.bind(this)),
-        catchError(this.handleError.bind(this))
+        tap(this._setToken),
+        catchError(this._handleError.bind(this))
       );
   }
 
-  private handleError(error: HttpErrorResponse): Observable<any> {
+  private _handleError(error: HttpErrorResponse): Observable<any> {
     const { message } = error.error.error;
 
     switch (message) {
@@ -66,7 +66,7 @@ export class AuthorizationService {
 
     return throwError(error);
   }
-  private setToken(response: FirebaseAuthorizationResponse | null): void {
+  private _setToken(response: FirebaseAuthorizationResponse | null): void {
     if (response) {
       const expDate = new Date(new Date().getTime() + +response.expiresIn * 1000)
       localStorage.setItem('firebase-token', response.idToken);
@@ -79,7 +79,7 @@ export class AuthorizationService {
   signUp(user: User): Observable<any> {
     return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseAPIKey}`, user)
       .pipe(
-        catchError(this.handleError.bind(this))
+        catchError(this._handleError.bind(this))
       );
   }
 }

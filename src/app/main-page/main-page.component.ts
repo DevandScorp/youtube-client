@@ -40,17 +40,16 @@ export class MainPageComponent implements OnInit {
     this.setSize();
     this.historyPreloader = true;
     this.historyService.getHistoryElements()
-      .pipe(catchError(this.handleHisotryError.bind(this)))
+      .pipe(catchError(this._handleHisotryError.bind(this)))
       .subscribe(result => {
-        // tslint:disable-next-line: max-line-length
-        this.historyElements = this.authorizationService.localId ? result.filter(element => element.localId === this.authorizationService.localId) : result;
+        this.historyElements = this.authorizationService.getLocalId() ? result.filter(element => element.localId === this.authorizationService.getLocalId()) : result;
         this.historyPreloader = false;
         console.log(result);
       });
   }
   logout() {
     this.authorizationService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigateByUrl('/login');
   }
   setSearchHistory(query: string): void {
     this.searchString = query;
@@ -102,13 +101,13 @@ export class MainPageComponent implements OnInit {
     if (this.searchString && this.elementsAmount !== prevElementsAmount) { this.search(); }
 
   }
-  private handleHisotryError(error: HttpErrorResponse): Observable<any> {
+  private _handleHisotryError(error: HttpErrorResponse): Observable<any> {
     if (error.message) { this.alertService.error(error.message); }
     console.log(error);
     this.historyPreloader = false;
     return throwError(error);
   }
-  private handleYoutubeError(error: HttpErrorResponse): Observable<any> {
+  private _handleYoutubeError(error: HttpErrorResponse): Observable<any> {
     if (error.message) { this.alertService.error(error.message); }
     console.log(error);
     this.preloader = false;
@@ -124,7 +123,7 @@ export class MainPageComponent implements OnInit {
     }
     this.preloader = true;
     this.youtubeService.searchVideoSnippet(this.searchString, this.elementsAmount, pageToken)
-      .pipe(catchError(this.handleYoutubeError.bind(this)))
+      .pipe(catchError(this._handleYoutubeError.bind(this)))
       .subscribe(async response => {
         this.nextPageToken = response.nextPageToken || '';
         this.prevPageToken = response.prevPageToken || '';
@@ -147,10 +146,10 @@ export class MainPageComponent implements OnInit {
         this.youtubeElements = youtubeElements;
         console.log(this.swipeDirection);
         if (!this.swipeDirection) {
-          const historyElement: HistoryElement = { query: this.searchString, localId: this.authorizationService.localId };
+          const historyElement: HistoryElement = { query: this.searchString, localId: this.authorizationService.getLocalId() };
           this.historyService.createHistoryElement(historyElement).subscribe((result) => {
             if (!this.historyElements.length) { this.historyElements = []; }
-            this.historyElements.push({ query: this.searchString, localId: this.authorizationService.localId });
+            this.historyElements.push({ query: this.searchString, localId: this.authorizationService.getLocalId() });
           });
         }
         this.swipeDirection = '';

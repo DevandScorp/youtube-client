@@ -19,7 +19,7 @@ export class AuthorizationInterceptor implements HttpInterceptor {
     if (this.authorizationService.isAuthorized()) {
       req = req.clone({
         setParams: {
-          auth: this.authorizationService.token
+          auth: this.authorizationService.getToken()
         }
       });
     }
@@ -29,7 +29,7 @@ export class AuthorizationInterceptor implements HttpInterceptor {
           console.log('[Interceptor Error]: ', error);
           if (error.status === 401) {
             this.authorizationService.logout();
-            this.router.navigate(['/login'], {
+            this.router.navigateByUrl('/login', {
               queryParams: {
                 isAuthorized: false
               }
