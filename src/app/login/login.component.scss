@@ -1,16 +1,20 @@
-div.container {
+@import '../app.component.scss';
+
+.container {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
   background: #f2f2f2;
 }
+
 form.login {
   width: 350px;
   height: 300px;
   background: white;
   border-radius: 5px;
 }
+
 div.login {
   font-family: Roboto;
   font-style: normal;
@@ -22,7 +26,7 @@ div.login {
   color: #000000;
 }
 
-div.signup-link {
+.signup-link {
   display: inline-block;
   font-family: Roboto;
   font-style: normal;
@@ -33,16 +37,18 @@ div.signup-link {
   margin-left: 95px;
   width: 60px;
   height: 20px;
+
+  a {
+    margin-bottom: 5px;
+    color: $primary-color;
+    text-decoration-line: underline;
+  }
 }
-div.signup-link a {
-  margin-bottom: 5px;
-  color: #2f80ed;
-  text-decoration-line: underline;
-}
-button.submit {
+
+.submit {
   padding-top: 3px;
   display: inline-block;
-  background: #2f80ed;
+  background: $primary-color;
   box-sizing: border-box;
   border-radius: 5px;
   width: 150px;
@@ -55,20 +61,23 @@ button.submit {
   text-align: center;
   margin-left: 19px;
   margin-top: 25px;
-  color: #ffffff;
+  color: white;
   border: none;
-  box-shadow: 0 0 4px #2f80ed;
+  box-shadow: 0 0 4px $primary-color;
   outline: none;
-}
-button.submit img {
-  width: 15px;
-  height: 15px;
-}
-button.submit:hover {
-  cursor: pointer;
-  box-shadow: 0 0 8px #2f80ed;
-}
-button.submit:disabled {
-  background: #8f8d8d;
-  box-shadow: 0 0 4px #8f8d8d;
+
+  img {
+    width: 15px;
+    height: 15px;
+  }
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 0 8px $primary-color;
+  }
+
+  &:disabled {
+    background: #8f8d8d;
+    box-shadow: 0 0 4px #8f8d8d;
+  }
 }

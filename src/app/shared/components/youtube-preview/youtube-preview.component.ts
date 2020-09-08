@@ -4,7 +4,7 @@ import { YoutubeElement } from '../../../interfaces';
 @Component({
   selector: 'app-youtube-preview',
   templateUrl: './youtube-preview.component.html',
-  styleUrls: ['./youtube-preview.component.css']
+  styleUrls: ['./youtube-preview.component.scss']
 })
 export class YoutubePreviewComponent implements OnInit {
 
