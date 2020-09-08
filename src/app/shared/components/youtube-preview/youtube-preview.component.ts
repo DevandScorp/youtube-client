@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { YoutubeElement } from '../interfaces';
+import { YoutubeElement } from '../../../interfaces';
 
 @Component({
   selector: 'app-youtube-preview',

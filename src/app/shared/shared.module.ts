@@ -4,6 +4,7 @@ import { FilterHistoryPipe } from './pipes/filterHistory.pipe';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { CommonModule } from '@angular/common';
 import { ValidationDirective } from './directives/validation.directive';
+import { YoutubePreviewComponent } from './components/youtube-preview/youtube-preview.component';
 
 @NgModule({
     imports: [
@@ -13,13 +14,15 @@ import { ValidationDirective } from './directives/validation.directive';
         AlertComponent,
         FilterHistoryPipe,
         ErrorPageComponent,
-        ValidationDirective
+        ValidationDirective,
+        YoutubePreviewComponent
     ],
     declarations: [
         AlertComponent,
         FilterHistoryPipe,
         ErrorPageComponent,
-        ValidationDirective
+        ValidationDirective,
+        YoutubePreviewComponent
     ]
   })
   export class SharedModule{}

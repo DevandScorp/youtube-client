@@ -7,8 +7,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { MainPageComponent } from './main-page/main-page.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { YoutubePreviewComponent } from './youtube-preview/youtube-preview.component';
+import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { SharedModule } from './shared/shared.module';
@@ -20,8 +19,7 @@ import { CoreModule } from './core/core.module';
     AppComponent,
     SignUpComponent,
     LoginComponent,
-    MainPageComponent,
-    YoutubePreviewComponent,
+    MainPageComponent
   ],
   imports: [
     SharedModule,
