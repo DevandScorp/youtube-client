@@ -1,8 +1,5 @@
 <div class="alert-wrap" *ngIf="text">
-  <div class="alert" [ngClass]="{
-      'alert-success': type === 'success',
-      'alert-error': type === 'error'
-      }">
-      <p>{{ text }}</p>
+  <div class="alert" [class.alert-success]="type === 'success'" [class.alert-error]="type === 'error'">
+    <p>{{ text }}</p>
   </div>
 </div>
