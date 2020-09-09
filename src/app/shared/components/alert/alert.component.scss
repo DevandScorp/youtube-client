@@ -1,12 +1,28 @@
+@import '../../../app.component.scss';
+
 .alert-wrap {
     position: fixed;
     z-index: 9999;
     top: 50px;
     right: 0;
-}
-.alert-success {
+
+    .alert-success {
+      max-width: 200px;
+      background: $success-color;
+      color: white;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 14px;
+      padding: 15px;
+      border-radius: 4px 0px 0px 4px;
+      border-left: #4bcf9f solid 10px;
+  }
+
+  .alert-error {
     max-width: 200px;
-    background: #19A974;
+    background: $error-color;
     color: white;
     font-family: Roboto;
     font-style: normal;
@@ -15,19 +31,7 @@
     line-height: 14px;
     padding: 15px;
     border-radius: 4px 0px 0px 4px;
-    border-left: #4bcf9f solid 10px;
+    border-left: #ff3737 solid 10px;
+  }
 }
 
-.alert-error {
-  max-width: 200px;
-  background: #ff0000;
-  color: white;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 14px;
-  padding: 15px;
-  border-radius: 4px 0px 0px 4px;
-  border-left: #ff3737 solid 10px;
-}

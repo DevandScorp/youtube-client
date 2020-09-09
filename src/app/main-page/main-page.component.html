@@ -32,7 +32,7 @@
           <div
             *ngFor="let historyElement of historyElements | filterHistory: searchString; let last = last"
             (mousedown)="setSearchHistory(historyElement.query)"
-            [ngClass]="{'last-child': last}"
+            [class.last-child]="last"
           >
             {{ historyElement.query }}
           </div>

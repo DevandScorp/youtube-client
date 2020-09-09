@@ -1,17 +1,19 @@
-div.container {
+@import '../app.component.scss';
+
+.container {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
   background: #f2f2f2;
 }
-form.sign-up {
+.sign-up {
   width: 344px;
   height: 300px;
   background: white;
   border-radius: 5px;
 }
-div.registration {
+.registration {
   font-family: Roboto;
   font-style: normal;
   font-weight: bold;
@@ -19,7 +21,7 @@ div.registration {
   line-height: 24px;
   margin-left: 20px;
   margin-top: 30px;
-  color: #000000;
+  color: black;
 }
 
 div.login-link {
@@ -33,16 +35,16 @@ div.login-link {
   margin-left: 119px;
   width: 40px;
   height: 14px;
+  a {
+    margin-top: 10px;
+    color: $primary-color;
+    text-decoration-line: underline;
+  }
 }
-div.login-link a {
-  margin-top: 10px;
-  color: #2f80ed;
-  text-decoration-line: underline;
-}
-button.submit {
+.submit {
   padding-top: 3px;
   display: inline-block;
-  background: #2f80ed;
+  background: $primary-color;
   box-sizing: border-box;
   border-radius: 5px;
   width: 150px;
@@ -57,17 +59,20 @@ button.submit {
   margin-top: 25px;
   color: white;
   border: none;
-  box-shadow: 0 0 4px #2f80ed;
-}
-button.submit:hover {
-  cursor: pointer;
-  box-shadow: 0 0 8px #2f80ed;
-}
-button.submit:disabled {
-  background: #8f8d8d;
-  box-shadow: 0 0 4px #8f8d8d;
-}
-button.submit img {
-  width: 15px;
-  height: 15px;
+  box-shadow: 0 0 4px $primary-color;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 0 8px $primary-color;
+  }
+
+  &:disabled {
+    background: $disabled-color;
+    box-shadow: 0 0 4px $disabled-color;
+  }
+
+  img {
+    width: 15px;
+    height: 15px;
+  }
 }

@@ -1,4 +1,3 @@
-import { Direct } from "protractor/built/driverProviders";
 import { Directive, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { merge, fromEvent, Subscription } from 'rxjs';

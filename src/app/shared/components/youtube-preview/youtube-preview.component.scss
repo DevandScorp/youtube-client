@@ -1,4 +1,6 @@
-div.youtube-preview {
+@import '../../../app.component.scss';
+
+.youtube-preview {
   width: 303px;
   height: 357px;
   border-radius: 5px;
@@ -6,46 +8,51 @@ div.youtube-preview {
     to bottom,
     #e0e0e0,
     #e0e0e0 98%,
-    #2f80ed 2%,
-    #2f80ed
+    $primary-color 2%,
+    $primary-color
   );
   margin: 5px;
   text-align: center;
-}
-img.youtube-preview-image {
-  width: 223px;
-  height: 123px;
-  margin-top: 20px;
-}
-div.icon-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin-top: 21px;
-}
-div.icon-container-item {
-  display: flex;
-  align-items: center;
-}
-div.icon-container-item img {
-  width: 20px;
-  height: 20px;
-  margin-right: 3px;
-}
-div.icon-container-item div {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 14px;
-}
-div.name {
-  text-align: center;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 23px;
-  color: #4f4f4f;
-  margin-top: 22px;
+
+  img.youtube-preview-image {
+    width: 223px;
+    height: 123px;
+    margin-top: 20px;
+  }
+
+  .icon-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 21px;
+
+    .icon-container-item {
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 20px;
+        height: 20px;
+        margin-right: 3px;
+      }
+
+      div {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 14px;
+      }
+    }
+  }
+  .name {
+    text-align: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 23px;
+    color: #4f4f4f;
+    margin-top: 22px;
+  }
 }

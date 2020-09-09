@@ -1,21 +1,9 @@
 <div class="youtube-preview">
   <img [src]="youtubeElement.image_url" class="youtube-preview-image" alt="">
   <div class="icon-container">
-    <div class="icon-container-item">
-      <img src="/assets/view.svg" alt="">
-      <div>{{ youtubeElement.view_count }}</div>
-    </div>
-    <div class="icon-container-item">
-      <img src="/assets/like.svg" alt="">
-      <div>{{ youtubeElement.like_count }}</div>
-    </div>
-    <div class="icon-container-item">
-      <img src="/assets/dislike.svg" alt="">
-      <div>{{ youtubeElement.dislike_count }}</div>
-    </div>
-    <div class="icon-container-item">
-      <img src="/assets/comment.svg" alt="">
-      <div>{{ youtubeElement.comment_count }}</div>
+    <div class="icon-container-item" *ngFor="let infoItem of iconsContainerInfo;">
+      <img src="{{ infoItem.icon }}" alt="">
+      <div>{{ youtubeElement[infoItem.countName] }}</div>
     </div>
   </div>
   <div class="name">

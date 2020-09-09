@@ -1,15 +1,17 @@
-div.container {
+@import '../app.component.scss';
+
+.container {
   height: 100vh;
   background: #f2f2f2;
 }
-div.youtube-container {
+.youtube-container {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   height: 100vh;
 }
-div.search-field {
+.search-field {
   text-align: center;
   position: fixed;
   width: 100vw;
@@ -19,12 +21,14 @@ div.search-field {
   justify-content: center;
   align-items: center;
   background-color: white;
+
+  img {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
 }
-div.search-field img {
-  margin-right: 10px;
-  margin-left: 10px;
-}
-input.search-input {
+
+.search-input {
   width: 396px;
   height: 24px;
   box-sizing: border-box;
@@ -37,7 +41,110 @@ input.search-input {
   font-size: 14px;
   line-height: 14px;
   color: #929292;
+
+  &:focus {
+    outline: none;
+  }
 }
+
+.youtube-info-img {
+  opacity: 0.5;
+  width: 80px;
+}
+
+.youtube-info {
+  margin: 5px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 14px;
+  color: #929292;
+}
+
+.logout:hover {
+  cursor: pointer;
+}
+
+button.search-button {
+  background: $primary-color;
+  border-radius: 0px 4px 4px 0px;
+  width: 80px;
+  height: 24px;
+  color: white;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 14px;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 0 8px $primary-color;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.youtube-preloader-img {
+  width: 100px;
+  height: 100px;
+}
+
+/**
+  dropdown
+**/
+.dropdown {
+  position: absolute;
+  top: 52px;
+  left: 40%;
+  display: inline-block;
+}
+
+.dropdown-child {
+  display: block;
+  background-color: white;
+  max-height: 400px;
+  overflow-y: scroll;
+  min-width: 200px;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+
+  div {
+    border-right: #66a4f5 solid 3px;
+    border-left: #66a4f5 solid 3px;
+    color: white;
+    padding: 15px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 14px;
+    color: #6d6a6a;
+  }
+
+  div:hover {
+    cursor: pointer;
+    color: #c7bdbd;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .last-child{
+    border-bottom: #66a4f5 solid 3px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+}
+
+
+
+
 @media only screen and (max-width: 450px) {
   .dropdown {
     left: 20px;
@@ -53,90 +160,4 @@ input.search-input {
   .dropdown {
     left: 0;
   }
-}
-input.search-input:focus {
-  outline: none;
-}
-img.youtube-info-img {
-  opacity: 0.5;
-  width: 80px;
-}
-div.youtube-info {
-  margin: 5px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 14px;
-  color: #929292;
-}
-img.logout:hover {
-  cursor: pointer;
-}
-button.search-button {
-  background: #2F80ED;
-  border-radius: 0px 4px 4px 0px;
-  width: 80px;
-  height: 24px;
-  color: white;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 14px;
-  border: none;
-}
-button.search-button:hover {
-  cursor: pointer;
-  box-shadow: 0 0 8px #2f80ed;
-}
-button.search-button:focus {
-  outline: none;
-}
-/**
-  dropdown
-**/
-.dropdown {
-  position: absolute;
-  top: 52px;
-  left: 40%;
-  display: inline-block;
-}
-.dropdown-child {
-  display: block;
-  background-color: white;
-  max-height: 400px;
-  overflow-y: scroll;
-  min-width: 200px;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-/* Hide scrollbar for Chrome, Safari and Opera */
-.dropdown-child::-webkit-scrollbar {
-  display: none;
-}
-.last-child{
-  border-bottom: #66a4f5 solid 3px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-.dropdown-child div {
-  border-right: #66a4f5 solid 3px;
-  border-left: #66a4f5 solid 3px;
-  color: white;
-  padding: 15px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 14px;
-  color: #6d6a6a;
-}
-.dropdown-child div:hover {
-  cursor: pointer;
-  color: rgb(199, 189, 189);
-}
-img.youtube-preloader-img {
-  width: 100px;
-  height: 100px;
 }
