@@ -1,9 +1,9 @@
-import { AuthorizationService } from '../core/services/authorization.service';
-import { HistoryService } from '../core/services/history.service';
+import { AuthorizationService } from '../../core/services/authorization.service';
+import { HistoryService } from '../../core/services/history.service';
 import { Component, OnInit, HostListener } from '@angular/core';
-import { YoutubeService } from '../core/services/youtube.service';
-import { YoutubeElement, HistoryElement } from '../interfaces';
-import { AlertService } from '../core/services/alert.service';
+import { YoutubeService } from '../../core/services/youtube.service';
+import { YoutubeElement, HistoryElement } from '../../interfaces';
+import { AlertService } from '../../core/services/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';

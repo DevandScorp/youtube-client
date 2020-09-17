@@ -3,10 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SignUpComponent } from './sign-up/sign-up.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { LoginComponent } from './login/login.component';
-import { MainPageComponent } from './main-page/main-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
@@ -17,16 +13,11 @@ import { CoreModule } from './core/core.module';
 @NgModule({
   declarations: [
     AppComponent,
-    SignUpComponent,
-    LoginComponent,
-    MainPageComponent
   ],
   imports: [
+    BrowserModule,
     SharedModule,
     CoreModule.forRoot(),
-    BrowserModule,
-    ReactiveFormsModule,
-    FormsModule,
     AppRoutingModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })

@@ -1,21 +1,10 @@
-import { AuthorizationGuard } from './core/guards/authorization.guard';
-import { ErrorPageComponent } from './shared/components/error-page/error-page.component';
-import { MainPageComponent } from './main-page/main-page.component';
-import { SignUpComponent } from './sign-up/sign-up.component';
-import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
-const routes: Routes = [
-  { path: '', component: MainPageComponent, canActivate: [AuthorizationGuard]},
-  { path: 'login', component: LoginComponent},
-  { path: 'signup', component: SignUpComponent},
-  { path: 'error', component: ErrorPageComponent},
-  { path: '**', redirectTo: '/error' },
-];
+import { RouterModule, PreloadAllModules } from '@angular/router';
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(
+    [{ path: '', loadChildren: () => import('./youtube-client/youtube-client.module').then(module => module.YoutubeClientModule) }]
+    )],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
