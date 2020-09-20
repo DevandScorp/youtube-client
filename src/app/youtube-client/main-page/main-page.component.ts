@@ -5,10 +5,9 @@ import { YoutubeService } from '../../core/services/youtube.service';
 import { YoutubeElement, HistoryElement } from '../../interfaces';
 import { AlertService } from '../../core/services/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { catchError, mergeMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
@@ -30,10 +29,10 @@ export class MainPageComponent implements OnInit {
   historyPreloader = false;
 
   constructor(private youtubeService: YoutubeService,
-              private alertService: AlertService,
-              private authorizationService: AuthorizationService,
-              private router: Router,
-              private historyService: HistoryService) { }
+    private alertService: AlertService,
+    private authorizationService: AuthorizationService,
+    private router: Router,
+    private historyService: HistoryService) { }
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
@@ -123,28 +122,38 @@ export class MainPageComponent implements OnInit {
     }
     this.preloader = true;
     this.youtubeService.searchVideoSnippet(this.searchString, this.elementsAmount, pageToken)
-      .pipe(catchError(this._handleYoutubeError.bind(this)))
-      .subscribe(async response => {
-        this.nextPageToken = response.nextPageToken || '';
-        this.prevPageToken = response.prevPageToken || '';
-        const youtubeVideoSnippets = response.items;
-        const youtubeElements: YoutubeElement[] = [];
-        for (const youtubeVideoSnippet of youtubeVideoSnippets) {
-          const { items } = await this.youtubeService.getVideoStatistics(youtubeVideoSnippet.id.videoId).toPromise();
-          const statistics = items[0]?.statistics;
-          youtubeElements.push({
-            name: youtubeVideoSnippet.snippet.title,
-            creation_date: new Date(youtubeVideoSnippet.snippet.publishedAt),
+      .pipe(
+        mergeMap(response => {
+          this.nextPageToken = response.nextPageToken || '';
+          this.prevPageToken = response.prevPageToken || '';
+          const youtubeVideoSnippets = response.items;
+          return forkJoin(youtubeVideoSnippets.map(youtubeVideoSnippet => {
+            return forkJoin({
+              name: of(youtubeVideoSnippet.snippet.title),
+              creation_date: of(new Date(youtubeVideoSnippet.snippet.publishedAt)),
+              image_url: of(youtubeVideoSnippet.snippet.thumbnails.high.url || '/assets/not-found.svg'),
+              statistics: this.youtubeService.getVideoStatistics(youtubeVideoSnippet.id.videoId)
+            })
+          })
+          )
+        }),
+        catchError(this._handleYoutubeError.bind(this))
+      )
+      .subscribe(response => {
+        const youtubeElements = response.map(youtubeElement => {
+          const statistics = youtubeElement.statistics.items[0]?.statistics;
+          return {
+            name: youtubeElement.name,
+            creation_date: youtubeElement.creation_date,
             view_count: statistics ? +statistics.viewCount || 0 : 0,
             like_count: statistics ? +statistics.likeCount || 0 : 0,
             dislike_count: statistics ? +statistics.dislikeCount || 0 : 0,
             comment_count: statistics ? +statistics.commentCount || 0 : 0,
-            image_url: youtubeVideoSnippet.snippet.thumbnails.high.url || '/assets/not-found.svg'
-          });
-        }
+            image_url: youtubeElement.image_url
+          };
+        })
         this.preloader = false;
         this.youtubeElements = youtubeElements;
-        console.log(this.swipeDirection);
         if (!this.swipeDirection) {
           const historyElement: HistoryElement = { query: this.searchString, localId: this.authorizationService.getLocalId() };
           this.historyService.createHistoryElement(historyElement).subscribe((result) => {
