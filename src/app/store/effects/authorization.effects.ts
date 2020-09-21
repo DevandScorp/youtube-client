@@ -49,6 +49,8 @@ export class AuthorizationEffects {
         exhaustMap((request: User) => {
             return this.authorizationService.signUp(request).pipe(
                 map(() => {
+                    this.alertService.success('Вы успешно зарегистрировались в системе');
+                    this.router.navigateByUrl('/login');
                     return SignUpSuccessAction();
                 }),
                 catchError((error: HttpErrorResponse) => {

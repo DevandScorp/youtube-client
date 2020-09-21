@@ -2,7 +2,7 @@ import { AuthorizationService } from '../../core/services/authorization.service'
 import { HistoryService } from '../../core/services/history.service';
 import { Component, OnInit, HostListener } from '@angular/core';
 import { YoutubeService } from '../../core/services/youtube.service';
-import { YoutubeElement, HistoryElement } from '../../interfaces';
+import { HistoryElement } from '../../interfaces';
 import { AlertService } from '../../core/services/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
@@ -17,7 +17,6 @@ export class MainPageComponent implements OnInit {
 
   searchString: string;
   elementsAmount: number;
-  youtubeElements: YoutubeElement[];
   screenWidth: number;
   showSearchHistory = false;
   preloader = false;

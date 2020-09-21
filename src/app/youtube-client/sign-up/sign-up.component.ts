@@ -2,11 +2,13 @@ import { AlertService } from '../../core/services/alert.service';
 import { AuthorizationService } from '../../core/services/authorization.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, Form } from '@angular/forms';
-import { User } from '../../interfaces';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
+import { AppState } from 'src/app/store';
+import { Store } from '@ngrx/store';
+import { SignUpRequestAction } from 'src/app/store/actions/authorization.actions';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -16,10 +18,9 @@ export class SignUpComponent implements OnInit {
 
   form: FormGroup;
   preloader = false;
+  signUpPreloader$ = this.store.select(state => state.authorization.signUpPreloader);
 
-  constructor(private authorizationService: AuthorizationService,
-    private alertService: AlertService,
-    private router: Router,
+  constructor(private store: Store<AppState>,
     private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -28,23 +29,11 @@ export class SignUpComponent implements OnInit {
       password: [null, [Validators.required, Validators.minLength(6)]],
     });
   }
-  private _handleError(error: HttpErrorResponse): Observable<any> {
-    this.preloader = false;
-    return throwError(error);
-  }
+
   submit(): void {
-    if (this.form.invalid) { return; }
-    const user: User = {
+    this.store.dispatch(SignUpRequestAction({
       email: this.form.value.email,
       password: this.form.value.password
-    };
-    this.preloader = true;
-    this.authorizationService.signUp(user)
-      .pipe(catchError(this._handleError.bind(this)))
-      .subscribe(() => {
-        this.alertService.success('Вы успешно зарегистрировались в системе');
-        this.form.reset();
-        this.router.navigateByUrl('/login');
-      });
+    }));
   }
 }

@@ -1,6 +1,5 @@
 import { createAction, props } from '@ngrx/store';
 import { User } from '../models/authorization.models';
-import { HttpErrorResponse } from '@angular/common/http';
 
 export enum AuthorizationActionTypes {
     SignUpRequest = '[Authorization] Sign Up Request',

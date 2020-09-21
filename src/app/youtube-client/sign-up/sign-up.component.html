@@ -26,7 +26,7 @@
       type="submit"
       class="submit"
       [disabled]="form.invalid"
-      *ngIf="preloader; else signUpBlock"
+      *ngIf="signUpPreloader$ | async; else signUpBlock"
     >
       <img src="/assets/preloader-button.gif" alt="" />
     </button>

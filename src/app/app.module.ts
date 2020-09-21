@@ -20,11 +20,11 @@ import * as Store from './store';
     BrowserModule,
     SharedModule,
     CoreModule.forRoot(),
+    StoreModule.forRoot(Store.reducers),
+    EffectsModule.forRoot(Store.effects),
     AppRoutingModule,
     HttpClientModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    StoreModule.forRoot(Store.reducers),
-    EffectsModule.forRoot(Store.effects)
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
