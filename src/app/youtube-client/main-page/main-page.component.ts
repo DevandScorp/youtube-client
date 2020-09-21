@@ -6,7 +6,7 @@ import { YoutubeElement, HistoryElement } from '../../interfaces';
 import { AlertService } from '../../core/services/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
-import { catchError, mergeMap } from 'rxjs/operators';
+import { catchError, mergeMap, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-main-page',
@@ -127,33 +127,30 @@ export class MainPageComponent implements OnInit {
           this.nextPageToken = response.nextPageToken || '';
           this.prevPageToken = response.prevPageToken || '';
           const youtubeVideoSnippets = response.items;
-          return forkJoin(youtubeVideoSnippets.map(youtubeVideoSnippet => {
-            return forkJoin({
-              name: of(youtubeVideoSnippet.snippet.title),
-              creation_date: of(new Date(youtubeVideoSnippet.snippet.publishedAt)),
-              image_url: of(youtubeVideoSnippet.snippet.thumbnails.high.url || '/assets/not-found.svg'),
-              statistics: this.youtubeService.getVideoStatistics(youtubeVideoSnippet.id.videoId)
+          return forkJoin(youtubeVideoSnippets.map(youtubeVideoSnippet => this.youtubeService.getVideoStatistics(youtubeVideoSnippet.id.videoId))).pipe(
+            map((snippets: any[]) => {
+              const youtubeResultingArray = [];
+              for(let i = 0; i < snippets.length; ++i) {
+                const statistics = snippets[i].items[0]?.statistics;
+                youtubeResultingArray.push({
+                  name: youtubeVideoSnippets[i].snippet.title,
+                  creation_date: new Date(youtubeVideoSnippets[i].snippet.publishedAt),
+                  view_count: statistics ? +statistics.viewCount || 0 : 0,
+                  like_count: statistics ? +statistics.likeCount || 0 : 0,
+                  dislike_count: statistics ? +statistics.dislikeCount || 0 : 0,
+                  comment_count: statistics ? +statistics.commentCount || 0 : 0,
+                  image_url: youtubeVideoSnippets[i].snippet.thumbnails.high.url || '/assets/not-found.svg'
+                })
+              }
+              return youtubeResultingArray;
             })
-          })
           )
         }),
         catchError(this._handleYoutubeError.bind(this))
       )
       .subscribe(response => {
-        const youtubeElements = response.map(youtubeElement => {
-          const statistics = youtubeElement.statistics.items[0]?.statistics;
-          return {
-            name: youtubeElement.name,
-            creation_date: youtubeElement.creation_date,
-            view_count: statistics ? +statistics.viewCount || 0 : 0,
-            like_count: statistics ? +statistics.likeCount || 0 : 0,
-            dislike_count: statistics ? +statistics.dislikeCount || 0 : 0,
-            comment_count: statistics ? +statistics.commentCount || 0 : 0,
-            image_url: youtubeElement.image_url
-          };
-        })
+        this.youtubeElements = response;
         this.preloader = false;
-        this.youtubeElements = youtubeElements;
         if (!this.swipeDirection) {
           const historyElement: HistoryElement = { query: this.searchString, localId: this.authorizationService.getLocalId() };
           this.historyService.createHistoryElement(historyElement).subscribe((result) => {
