@@ -10,7 +10,7 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-
+import * as Store from './store';
 
 @NgModule({
   declarations: [
@@ -23,8 +23,8 @@ import { EffectsModule } from '@ngrx/effects';
     AppRoutingModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([])
+    StoreModule.forRoot(Store.reducers),
+    EffectsModule.forRoot(Store.effects)
   ],
   providers: [],
   bootstrap: [AppComponent]

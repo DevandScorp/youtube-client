@@ -28,58 +28,13 @@ export class AuthorizationService {
   }
 
   logout(): void {
-    this._setToken(null);
+    localStorage.clear();
   }
 
   login(user: User): Observable<any> {
-    user.returnSecureToken = true;
-    return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseAPIKey}`, user)
-      .pipe(
-        tap(this._setToken),
-        catchError(this._handleError.bind(this))
-      );
-  }
-
-  private _handleError(error: HttpErrorResponse): Observable<any> {
-    const { message } = error.error.error;
-
-    switch (message) {
-      case 'INVALID_EMAIL':
-        this.alertService.error('Неверный email');
-        break;
-      case 'INVALID_PASSWORD':
-        this.alertService.error('Неверный пароль');
-        break;
-      case 'EMAIL_NOT_FOUND':
-        this.alertService.error('Такого email не существует');
-        break;
-      case 'EMAIL_EXISTS':
-        this.alertService.error('Данный email уже зарегистрирован в системе');
-        break;
-      case 'OPERATION_NOT_ALLOWED':
-        this.alertService.error('Вход с паролем отключен для этого проекта');
-        break;
-      case 'TOO_MANY_ATTEMPTS_TRY_LATER':
-        this.alertService.error('Слишком много попыток. Попробуйте позже');
-        break;
-    }
-
-    return throwError(error);
-  }
-  private _setToken(response: FirebaseAuthorizationResponse | null): void {
-    if (response) {
-      const expDate = new Date(new Date().getTime() + +response.expiresIn * 1000)
-      localStorage.setItem('firebase-token', response.idToken);
-      localStorage.setItem('firebase-expire-date', expDate.toString());
-      localStorage.setItem('firebase-local-id', response.localId);
-    } else {
-      localStorage.clear();
-    }
+    return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseAPIKey}`, { ...user, returnSecureToken: true });
   }
   signUp(user: User): Observable<any> {
-    return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseAPIKey}`, user)
-      .pipe(
-        catchError(this._handleError.bind(this))
-      );
+    return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseAPIKey}`, user);
   }
 }

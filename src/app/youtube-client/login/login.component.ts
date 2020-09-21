@@ -7,6 +7,9 @@ import { User } from '../../interfaces';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store';
+import { LogInRequestAction } from 'src/app/store/actions/authorization.actions';
 
 @Component({
   selector: 'app-login',
@@ -16,10 +19,9 @@ import { catchError } from 'rxjs/operators';
 export class LoginComponent implements OnInit {
 
   form: FormGroup;
-  preloader = false;
+  loginPreloader$ = this.store.select(state => state.authorization.loginPreloader);
 
-  constructor(private authorizationService: AuthorizationService,
-    private router: Router,
+  constructor(private store: Store<AppState>,
     private route: ActivatedRoute,
     private alertService: AlertService,
     private formBuilder: FormBuilder) { }
@@ -35,21 +37,10 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-  private _handleError(error: HttpErrorResponse): Observable<any> {
-    this.preloader = false;
-    return throwError(error);
-  }
   submit(): void {
-    this.preloader = true;
-    this.authorizationService.login({
+    this.store.dispatch(LogInRequestAction({
       email: this.form.value.email,
       password: this.form.value.password
-    })
-      .pipe(catchError(this._handleError.bind(this)))
-      .subscribe(() => {
-        this.alertService.success('Вы успешно вошли в систему');
-        this.form.reset();
-        this.router.navigateByUrl('/');
-      });
+    }))
   }
 }
