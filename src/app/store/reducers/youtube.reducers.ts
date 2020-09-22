@@ -14,8 +14,13 @@ export const initialState: State = {
 
 const youtubeReducer = createReducer(
   initialState,
-  on(YoutubeActions.YoutubeSearchRequesttAction, (state) => ({ ...state, youtubeSearchPreloader: true })),
-  on(YoutubeActions.YoutubeSearchSuccessAction, (state) => ({ ...state, youtubeSearchPreloader: false })),
+  on(YoutubeActions.YoutubeSearchRequestAction, (state) => ({ ...state, youtubeSearchPreloader: true })),
+  on(YoutubeActions.YoutubeSearchSuccessAction, (state, response) => {
+    return {
+    ...state,
+    youtubeSearchPreloader: false,
+    youtubeElements: response.youtubeElements
+  }}),
   on(YoutubeActions.YoutubeSearchErrorAction, (state) => ({ ...state, youtubeSearchPreloader: false })),
 )
 

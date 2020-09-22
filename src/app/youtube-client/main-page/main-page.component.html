@@ -45,7 +45,7 @@
   <div class="youtube-container">
     <img
       src="/assets/preloader.gif"
-      *ngIf="preloader"
+      *ngIf="(youtube$ | async).youtubeSearchPreloader"
       class="youtube-preloader-img"
       alt=""
     />
@@ -64,9 +64,9 @@
       src="/assets/right-arrow.svg"
       alt=""
     />
-    <ng-container *ngIf="!preloader && searchString">
+    <ng-container *ngIf="!(youtube$ | async).youtubeSearchPreloader && searchString">
       <app-youtube-preview
-        *ngFor="let youtubeElement of youtubeElements"
+        *ngFor="let youtubeElement of (youtube$ | async).youtubeElements"
         [youtubeElement]="youtubeElement"
       ></app-youtube-preview>
     </ng-container>

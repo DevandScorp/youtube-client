@@ -1,13 +1,16 @@
 import { AuthorizationService } from '../../core/services/authorization.service';
 import { HistoryService } from '../../core/services/history.service';
 import { Component, OnInit, HostListener } from '@angular/core';
-import { YoutubeService } from '../../core/services/youtube.service';
-import { HistoryElement } from '../../interfaces';
+import { HistoryElement } from '../../store/models/history.models';
 import { AlertService } from '../../core/services/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { forkJoin, Observable, of, throwError } from 'rxjs';
-import { catchError, mergeMap, map } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../store';
+import { YoutubeSearchRequestAction, YoutubeActionTypes } from 'src/app/store/actions/youtube.actions';
+import { Actions, ofType } from '@ngrx/effects';
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
@@ -17,24 +20,33 @@ export class MainPageComponent implements OnInit {
 
   searchString: string;
   elementsAmount: number;
-  screenWidth: number;
   showSearchHistory = false;
-  preloader = false;
   swipeCoord: number[];
   swipeDirection: string;
+
   nextPageToken: string;
   prevPageToken: string;
+
   historyElements: HistoryElement[];
   historyPreloader = false;
 
-  constructor(private youtubeService: YoutubeService,
+  youtube$ = this.store.select(state => state.youtube);
+
+  constructor(
+    private store: Store<AppState>,
     private alertService: AlertService,
     private authorizationService: AuthorizationService,
     private router: Router,
-    private historyService: HistoryService) { }
+    private historyService: HistoryService,
+    private actions$: Actions) { }
 
   ngOnInit(): void {
-    this.screenWidth = window.innerWidth;
+    this.actions$.pipe(
+      ofType(YoutubeActionTypes.YoutubeSearchSuccess),
+    ).subscribe((result: {nextPageToken: string, prevPageToken: string }) => {
+      this.nextPageToken = result.nextPageToken;
+      this.prevPageToken = result.prevPageToken;
+    })
     this.setSize();
     this.historyPreloader = true;
     this.historyService.getHistoryElements()
@@ -84,7 +96,6 @@ export class MainPageComponent implements OnInit {
   }
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
-    this.screenWidth = window.innerWidth;
     this.setSize();
   }
   /**
@@ -95,7 +106,7 @@ export class MainPageComponent implements OnInit {
      * Сохраняю предыдущее количество элементов, чтобы не перерисовывать постоянно
      */
     const prevElementsAmount = this.elementsAmount;
-    this.elementsAmount = Math.floor(this.screenWidth / 320);
+    this.elementsAmount = Math.floor(window.innerWidth / 320);
     if (this.searchString && this.elementsAmount !== prevElementsAmount) { this.search(); }
 
   }
@@ -105,60 +116,26 @@ export class MainPageComponent implements OnInit {
     this.historyPreloader = false;
     return throwError(error);
   }
-  private _handleYoutubeError(error: HttpErrorResponse): Observable<any> {
-    if (error.message) { this.alertService.error(error.message); }
-    console.log(error);
-    this.preloader = false;
-    return throwError(error);
-  }
   search(): void {
-    if (!this.searchString) { return; }
+    if (!this.searchString) return;
     let pageToken;
     if (this.swipeDirection === 'next') {
       pageToken = this.nextPageToken;
     } else if (this.swipeDirection === 'previous') {
       pageToken = this.prevPageToken;
     }
-    this.preloader = true;
-    this.youtubeService.searchVideoSnippet(this.searchString, this.elementsAmount, pageToken)
-      .pipe(
-        mergeMap(response => {
-          this.nextPageToken = response.nextPageToken || '';
-          this.prevPageToken = response.prevPageToken || '';
-          const youtubeVideoSnippets = response.items;
-          return forkJoin(youtubeVideoSnippets.map(youtubeVideoSnippet => this.youtubeService.getVideoStatistics(youtubeVideoSnippet.id.videoId))).pipe(
-            map((snippets: any[]) => {
-              const youtubeResultingArray = [];
-              for(let i = 0; i < snippets.length; ++i) {
-                const statistics = snippets[i].items[0]?.statistics;
-                youtubeResultingArray.push({
-                  name: youtubeVideoSnippets[i].snippet.title,
-                  creation_date: new Date(youtubeVideoSnippets[i].snippet.publishedAt),
-                  view_count: statistics ? +statistics.viewCount || 0 : 0,
-                  like_count: statistics ? +statistics.likeCount || 0 : 0,
-                  dislike_count: statistics ? +statistics.dislikeCount || 0 : 0,
-                  comment_count: statistics ? +statistics.commentCount || 0 : 0,
-                  image_url: youtubeVideoSnippets[i].snippet.thumbnails.high.url || '/assets/not-found.svg'
-                })
-              }
-              return youtubeResultingArray;
-            })
-          )
-        }),
-        catchError(this._handleYoutubeError.bind(this))
-      )
-      .subscribe(response => {
-        this.youtubeElements = response;
-        this.preloader = false;
-        if (!this.swipeDirection) {
-          const historyElement: HistoryElement = { query: this.searchString, localId: this.authorizationService.getLocalId() };
-          this.historyService.createHistoryElement(historyElement).subscribe((result) => {
-            if (!this.historyElements.length) { this.historyElements = []; }
-            this.historyElements.push({ query: this.searchString, localId: this.authorizationService.getLocalId() });
-          });
-        }
-        this.swipeDirection = '';
-      });
+    this.store.dispatch(YoutubeSearchRequestAction({ searchString: this.searchString, elementsAmount: this.elementsAmount, pageToken }))
+    //   .subscribe(response => {
+    //     this.youtubeElements = response;
+    //     if (!this.swipeDirection) {
+    //       const historyElement: HistoryElement = { query: this.searchString, localId: this.authorizationService.getLocalId() };
+    //       this.historyService.createHistoryElement(historyElement).subscribe((result) => {
+    //         if (!this.historyElements.length) { this.historyElements = []; }
+    //         this.historyElements.push({ query: this.searchString, localId: this.authorizationService.getLocalId() });
+    //       });
+    //     }
+    //     this.swipeDirection = '';
+    //   });
   }
 
 }

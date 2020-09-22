@@ -7,6 +7,6 @@ export enum YoutubeActionTypes {
   YoutubeSearchError = '[Youtube] Youtube Search Error'
 }
 
-export const YoutubeSearchRequesttAction = createAction(YoutubeActionTypes.YoutubeSearchRequest, props<{ searchString: string, elementsAmount: number, pageToken?: string }>());
-export const YoutubeSearchSuccessAction = createAction(YoutubeActionTypes.YoutubeSearchSuccess, props<{ youtubeElements: YoutubeElement[] } >());
+export const YoutubeSearchRequestAction = createAction(YoutubeActionTypes.YoutubeSearchRequest, props<{ searchString: string, elementsAmount: number, pageToken?: string }>());
+export const YoutubeSearchSuccessAction = createAction(YoutubeActionTypes.YoutubeSearchSuccess, props<{ youtubeElements: YoutubeElement[], nextPageToken: string, prevPageToken: string } >());
 export const YoutubeSearchErrorAction = createAction(YoutubeActionTypes.YoutubeSearchError);

@@ -13,9 +13,9 @@ export const initialState: State = {
 
 const authorizationReducer = createReducer(
     initialState,
-    on(AuthorizationActions.SignUpRequestAction, (state) => ({ ...state, signUpPreloader: true })),
-    on(AuthorizationActions.SignUpSuccessAction, (state) => ({ ...state, signUpPreloader: false })),
-    on(AuthorizationActions.SignUpFailureAction, (state) => ({ ...state, signUpPreloader: false })),
+    on(AuthorizationActions.SignUpRequestAction, state => ({ ...state, signUpPreloader: true })),
+    on(AuthorizationActions.SignUpSuccessAction, state => ({ ...state, signUpPreloader: false })),
+    on(AuthorizationActions.SignUpFailureAction, state => ({ ...state, signUpPreloader: false })),
     on(AuthorizationActions.LogInRequestAction, state => ({ ...state, loginPreloader: true })),
     on(AuthorizationActions.LogInSuccessAction, state => ({ ...state, loginPreloader: false })),
     on(AuthorizationActions.LogInFailureAction, state => ({ ...state, loginPreloader: false })),

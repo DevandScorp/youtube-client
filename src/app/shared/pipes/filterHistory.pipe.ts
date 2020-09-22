@@ -1,4 +1,4 @@
-import { HistoryElement } from '../../interfaces';
+import { HistoryElement } from '../../store/models/history.models';
 import { PipeTransform, Pipe } from '@angular/core';
 
 @Pipe({
