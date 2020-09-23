@@ -1,12 +1,18 @@
-import { createReducer, on, Action } from '@ngrx/store'
+import { createReducer, on, Action, createSelector } from '@ngrx/store'
 import * as AuthorizationActions from '../actions/authorization.actions';
 
-export interface State {
+export interface AuthorizationState {
+    token: string;
+    expireDate: Date;
+    localId: string;
     loginPreloader: boolean;
     signUpPreloader: boolean;
 }
 
-export const initialState: State = {
+export const initialState: AuthorizationState = {
+    token: localStorage.getItem('firebase-token'),
+    expireDate: new Date(localStorage.getItem('firebase-expire-date')),
+    localId: localStorage.getItem('firebase-local-id'),
     loginPreloader: false,
     signUpPreloader: false
 }
@@ -17,10 +23,10 @@ const authorizationReducer = createReducer(
     on(AuthorizationActions.SignUpSuccessAction, state => ({ ...state, signUpPreloader: false })),
     on(AuthorizationActions.SignUpFailureAction, state => ({ ...state, signUpPreloader: false })),
     on(AuthorizationActions.LogInRequestAction, state => ({ ...state, loginPreloader: true })),
-    on(AuthorizationActions.LogInSuccessAction, state => ({ ...state, loginPreloader: false })),
+    on(AuthorizationActions.LogInSuccessAction, (state, response) => ({ ...state, ...response, loginPreloader: false })),
     on(AuthorizationActions.LogInFailureAction, state => ({ ...state, loginPreloader: false })),
 )
 
-export function reducer(state: State | undefined, action: Action) {
+export function reducer(state: AuthorizationState | undefined, action: Action) {
     return authorizationReducer(state, action);
 }

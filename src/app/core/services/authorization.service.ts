@@ -9,27 +9,7 @@ import { User } from 'src/app/store/models/authorization.models';
 @Injectable()
 export class AuthorizationService {
 
-  expireDate: Date;
-  constructor(private http: HttpClient, private alertService: AlertService) { }
-
-  isAuthorized(): boolean {
-    return !!this.getToken();
-  }
-  getLocalId(): string {
-    return localStorage.getItem('firebase-local-id');
-  }
-  getToken(): string {
-    const expDate = new Date(localStorage.getItem('firebase-expire-date'));
-    if (new Date() > expDate) {
-      this.logout();
-      return null;
-    }
-    return localStorage.getItem('firebase-token');
-  }
-
-  logout(): void {
-    localStorage.clear();
-  }
+  constructor(private http: HttpClient) { }
 
   login(user: User): Observable<any> {
     return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseAPIKey}`, { ...user, returnSecureToken: true });

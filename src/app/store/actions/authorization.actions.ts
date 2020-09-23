@@ -17,5 +17,5 @@ export const SignUpFailureAction = createAction(AuthorizationActionTypes.SignUpE
 
 /** Log in */
 export const LogInRequestAction = createAction(AuthorizationActionTypes.LogInRequest, props<User>());
-export const LogInSuccessAction = createAction(AuthorizationActionTypes.LogInSuccess);
+export const LogInSuccessAction = createAction(AuthorizationActionTypes.LogInSuccess, props<{ token: string, expireDate: Date, localId: string }>());
 export const LogInFailureAction = createAction(AuthorizationActionTypes.LogInError);

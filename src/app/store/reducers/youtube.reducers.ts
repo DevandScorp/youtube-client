@@ -2,12 +2,12 @@ import { createReducer, on, Action } from '@ngrx/store'
 import * as YoutubeActions from '../actions/youtube.actions';
 import { YoutubeElement } from '../models/youtube.models';
 
-export interface State {
+export interface YoutubeState {
   youtubeSearchPreloader: boolean;
   youtubeElements: YoutubeElement[];
 }
 
-export const initialState: State = {
+export const initialState: YoutubeState = {
   youtubeSearchPreloader: false,
   youtubeElements: []
 }
@@ -24,6 +24,6 @@ const youtubeReducer = createReducer(
   on(YoutubeActions.YoutubeSearchErrorAction, (state) => ({ ...state, youtubeSearchPreloader: false })),
 )
 
-export function reducer(state: State | undefined, action: Action) {
+export function reducer(state: YoutubeState | undefined, action: Action) {
   return youtubeReducer(state, action);
 }

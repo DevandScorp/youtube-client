@@ -1,22 +1,29 @@
 import { AuthorizationService } from '../services/authorization.service';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { AppState } from 'src/app/store';
+import { Store } from '@ngrx/store';
+import { selectToken } from 'src/app/store/selectors/authorization.selector';
+import { take, mergeMap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
-  constructor(private authorizationService: AuthorizationService,
-              private router: Router) { }
+  constructor(private store: Store<AppState>,
+    private router: Router) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> | boolean {
-    if (!this.authorizationService.isAuthorized()) {
-      this.authorizationService.logout();
-      return this.router.navigateByUrl('/login', {
-        queryParams: {
-          isAuthorized: false
+    return this.store.select(selectToken).pipe(
+      take(1),
+      mergeMap(response => {
+        if (!response) {
+          localStorage.clear();
+          return this.router.navigateByUrl('/login', {
+            queryParams: {
+              isAuthorized: false
+            }
+          });
         }
-      });
-    }
-    return true;
+        return of(true);
+      }));
   }
-
 }

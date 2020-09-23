@@ -67,13 +67,13 @@ export class AuthorizationEffects {
             console.log(request);
             return this.authorizationService.login(request).pipe(
                 map((response: FirebaseAuthorizationResponse) => {
-                    const expDate = new Date(new Date().getTime() + +response.expiresIn * 1000)
+                    const expireDate = new Date(new Date().getTime() + +response.expiresIn * 1000)
                     localStorage.setItem('firebase-token', response.idToken);
-                    localStorage.setItem('firebase-expire-date', expDate.toString());
+                    localStorage.setItem('firebase-expire-date', expireDate.toString());
                     localStorage.setItem('firebase-local-id', response.localId);
                     this.alertService.success('Вы успешно вошли в систему');
                     this.router.navigateByUrl('/');
-                    return LogInSuccessAction();
+                    return LogInSuccessAction({ token: response.idToken, expireDate: expireDate, localId: response.localId });
                 }),
                 catchError((error: HttpErrorResponse) => {
                     this._handleError(error);

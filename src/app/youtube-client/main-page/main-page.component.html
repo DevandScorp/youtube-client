@@ -26,15 +26,15 @@
             src="/assets/preloader.gif"
             class="youtube-preloader-img"
             style="width: 40px; height: 40px;"
-            *ngIf="historyPreloader"
+            *ngIf="(history$ | async).historyPreloader"
             alt=""
           />
           <div
-            *ngFor="let historyElement of historyElements | filterHistory: searchString; let last = last"
-            (mousedown)="setSearchHistory(historyElement.query)"
+            *ngFor="let historyElement of (history$ | async).historyElements | filterHistory: searchString; let last = last"
+            (mousedown)="setSearchHistory(historyElement)"
             [class.last-child]="last"
           >
-            {{ historyElement.query }}
+            {{ historyElement }}
           </div>
         </div>
       </div>

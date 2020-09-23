@@ -32,6 +32,7 @@ export class YoutubeEffects {
                     const youtubeVideoSnippets = response.items;
                     return forkJoin(youtubeVideoSnippets.map(youtubeVideoSnippet => this.youtubeService.getVideoStatistics(youtubeVideoSnippet.id.videoId))).pipe(
                         map((snippets: any[]) => {
+                            console.log('before youtube resulting array');
                             const youtubeResultingArray: YoutubeElement[] = snippets.map((snippet, index) => {
                                 const statistics = snippet.items[0]?.statistics;
                                 return {
@@ -44,7 +45,9 @@ export class YoutubeEffects {
                                     image_url: youtubeVideoSnippets[index].snippet.thumbnails.high.url || '/assets/not-found.svg'
                                 }
                             });
+                            console.log('before dispatch');
                             this.store.dispatch(CreateHistoryElementRequestAction({ query: request.searchString, localId: localStorage.getItem('firebase-local-id') }));
+                            console.log('after dispatch');
                             return YoutubeSearchSuccessAction({ youtubeElements: youtubeResultingArray, nextPageToken, prevPageToken });
                         })
                     );

@@ -6,9 +6,9 @@ import { YoutubeEffects } from './effects/youtube.effects';
 import { HistoryEffects } from './effects/history.effects';
 
 export interface AppState {
-    authorization: AuthorizationReducer.State,
-    youtube: YoutubeReducer.State,
-    history: HistoryReducer.State
+    authorization: AuthorizationReducer.AuthorizationState,
+    youtube: YoutubeReducer.YoutubeState,
+    history: HistoryReducer.HistoryState
 }
 
 export const reducers = {

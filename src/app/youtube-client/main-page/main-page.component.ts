@@ -11,6 +11,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../store';
 import { YoutubeSearchRequestAction, YoutubeActionTypes } from 'src/app/store/actions/youtube.actions';
 import { Actions, ofType } from '@ngrx/effects';
+import { GetHistoryElementsRequestAction } from 'src/app/store/actions/history.actions';
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
@@ -28,16 +29,15 @@ export class MainPageComponent implements OnInit {
   prevPageToken: string;
 
   historyElements: HistoryElement[];
-  historyPreloader = false;
 
   youtube$ = this.store.select(state => state.youtube);
 
+  history$ = this.store.select(state => state.history);
+
   constructor(
     private store: Store<AppState>,
-    private alertService: AlertService,
     private authorizationService: AuthorizationService,
     private router: Router,
-    private historyService: HistoryService,
     private actions$: Actions) { }
 
   ngOnInit(): void {
@@ -48,17 +48,10 @@ export class MainPageComponent implements OnInit {
       this.prevPageToken = result.prevPageToken;
     })
     this.setSize();
-    this.historyPreloader = true;
-    this.historyService.getHistoryElements()
-      .pipe(catchError(this._handleHisotryError.bind(this)))
-      .subscribe(result => {
-        this.historyElements = this.authorizationService.getLocalId() ? result.filter(element => element.localId === this.authorizationService.getLocalId()) : result;
-        this.historyPreloader = false;
-        console.log(result);
-      });
+    this.store.dispatch(GetHistoryElementsRequestAction());
   }
   logout() {
-    this.authorizationService.logout();
+    localStorage.clear();
     this.router.navigateByUrl('/login');
   }
   setSearchHistory(query: string): void {
@@ -107,14 +100,7 @@ export class MainPageComponent implements OnInit {
      */
     const prevElementsAmount = this.elementsAmount;
     this.elementsAmount = Math.floor(window.innerWidth / 320);
-    if (this.searchString && this.elementsAmount !== prevElementsAmount) { this.search(); }
-
-  }
-  private _handleHisotryError(error: HttpErrorResponse): Observable<any> {
-    if (error.message) { this.alertService.error(error.message); }
-    console.log(error);
-    this.historyPreloader = false;
-    return throwError(error);
+    if (this.searchString && this.elementsAmount !== prevElementsAmount) this.search();
   }
   search(): void {
     if (!this.searchString) return;
@@ -125,17 +111,6 @@ export class MainPageComponent implements OnInit {
       pageToken = this.prevPageToken;
     }
     this.store.dispatch(YoutubeSearchRequestAction({ searchString: this.searchString, elementsAmount: this.elementsAmount, pageToken }))
-    //   .subscribe(response => {
-    //     this.youtubeElements = response;
-    //     if (!this.swipeDirection) {
-    //       const historyElement: HistoryElement = { query: this.searchString, localId: this.authorizationService.getLocalId() };
-    //       this.historyService.createHistoryElement(historyElement).subscribe((result) => {
-    //         if (!this.historyElements.length) { this.historyElements = []; }
-    //         this.historyElements.push({ query: this.searchString, localId: this.authorizationService.getLocalId() });
-    //       });
-    //     }
-    //     this.swipeDirection = '';
-    //   });
   }
 
 }
