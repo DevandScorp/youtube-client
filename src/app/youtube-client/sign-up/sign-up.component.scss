@@ -7,12 +7,14 @@
   height: 100vh;
   background: #f2f2f2;
 }
+
 .sign-up {
   width: 344px;
   height: 300px;
   background: white;
   border-radius: 5px;
 }
+
 .registration {
   font-family: Roboto;
   font-style: normal;
@@ -35,12 +37,14 @@ div.login-link {
   margin-left: 119px;
   width: 40px;
   height: 14px;
+
   a {
     margin-top: 10px;
     color: $primary-color;
     text-decoration-line: underline;
   }
 }
+
 .submit {
   padding-top: 3px;
   display: inline-block;

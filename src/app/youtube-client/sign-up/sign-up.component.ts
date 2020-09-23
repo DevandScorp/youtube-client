@@ -11,7 +11,6 @@ import { SignUpRequestAction } from 'src/app/store/actions/authorization.actions
 export class SignUpComponent implements OnInit {
 
   form: FormGroup;
-  preloader = false;
   signUpPreloader$ = this.store.select(state => state.authorization.signUpPreloader);
 
   constructor(private store: Store<AppState>,

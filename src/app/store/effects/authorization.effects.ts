@@ -64,7 +64,6 @@ export class AuthorizationEffects {
     logIn$ = createEffect(() => this.actions$.pipe(
         ofType(AuthorizationActionTypes.LogInRequest),
         exhaustMap((request: User) => {
-            console.log(request);
             return this.authorizationService.login(request).pipe(
                 map((response: FirebaseAuthorizationResponse) => {
                     const expireDate = new Date(new Date().getTime() + +response.expiresIn * 1000)

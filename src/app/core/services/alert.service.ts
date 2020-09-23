@@ -9,6 +9,7 @@ export class AlertService {
     success(text: string) {
         this.alert$.next({ type: 'success', text })
     }
+    
     error(text: string) {
         this.alert$.next({ type: 'error', text })
     }

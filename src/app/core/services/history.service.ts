@@ -12,6 +12,7 @@ export class HistoryService {
   createHistoryElement(historyElement: HistoryElement): Observable<any> {
     return this.http.post(`${environment.firebaseDatabaseUrl}/history.json`, historyElement);
   }
+  
   getHistoryElements(): Observable<HistoryElement[]> {
     return this.http.get<HistoryElement[]>(`${environment.firebaseDatabaseUrl}/history.json`)
       .pipe(map((response: any) => response ? Object.keys(response).map(key => response[key]) : []));

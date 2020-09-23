@@ -30,7 +30,6 @@ export class ValidationDirective implements AfterViewInit, OnDestroy {
   }
 
   private _getError(): string {
-    console.log(this.control.control.errors);
     return (this.control.control.errors && Object.keys(this.control.control.errors)[0]) || '';
   }
 
@@ -57,6 +56,7 @@ export class ValidationDirective implements AfterViewInit, OnDestroy {
       this._messageWrapper.remove();
     }
   }
+
   ngOnDestroy(): void {
     if(this.subscription) this.subscription.unsubscribe();
   }

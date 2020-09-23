@@ -34,7 +34,6 @@ export class AuthorizationInterceptor implements HttpInterceptor {
       }),
       catchError((error: HttpErrorResponse) => {
         this.alertService.error('error');
-        console.log('[Interceptor Error]: ', error);
         if (error.status === 401) {
           localStorage.clear();
           this.router.navigateByUrl('/login', {

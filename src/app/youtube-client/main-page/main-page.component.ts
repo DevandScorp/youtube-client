@@ -22,10 +22,7 @@ export class MainPageComponent implements OnInit {
   nextPageToken: string;
   prevPageToken: string;
 
-  historyElements: HistoryElement[];
-
   youtube$ = this.store.select(state => state.youtube);
-
   history$ = this.store.select(state => state.history);
 
   constructor(
@@ -43,15 +40,18 @@ export class MainPageComponent implements OnInit {
     this.setSize();
     this.store.dispatch(GetHistoryElementsRequestAction());
   }
+
   logout() {
     localStorage.clear();
     this.router.navigateByUrl('/login');
   }
+  
   setSearchHistory(query: string): void {
     this.searchString = query;
     this.swipeDirection = '';
     this.search();
   }
+
   swipeMouse(event: MouseEvent, when: string): void {
     const coord: [number, number] = [event.clientX, event.clientY];
     if (when === 'start') {
@@ -66,6 +66,7 @@ export class MainPageComponent implements OnInit {
       }
     }
   }
+
   swipe(event: TouchEvent, when: string): void {
     const coord: [number, number] = [event.changedTouches[0].clientX, event.changedTouches[0].clientY];
     if (when === 'start') {
@@ -80,10 +81,12 @@ export class MainPageComponent implements OnInit {
       }
     }
   }
+
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
     this.setSize();
   }
+
   /**
    * Определяет размер выдаваемых результатов поиска и перезапрашивает данные
    */
@@ -95,6 +98,7 @@ export class MainPageComponent implements OnInit {
     this.elementsAmount = Math.floor(window.innerWidth / 320);
     if (this.searchString && this.elementsAmount !== prevElementsAmount) this.search();
   }
+
   search(): void {
     if (!this.searchString) return;
     let pageToken;
@@ -105,5 +109,4 @@ export class MainPageComponent implements OnInit {
     }
     this.store.dispatch(YoutubeSearchRequestAction({ searchString: this.searchString, elementsAmount: this.elementsAmount, pageToken }))
   }
-
 }

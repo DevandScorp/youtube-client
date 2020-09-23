@@ -12,6 +12,7 @@ export class AuthorizationService {
   login(user: User): Observable<any> {
     return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseAPIKey}`, { ...user, returnSecureToken: true });
   }
+  
   signUp(user: User): Observable<any> {
     return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseAPIKey}`, user);
   }

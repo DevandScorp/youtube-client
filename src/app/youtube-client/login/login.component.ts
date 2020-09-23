@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
       }
     });
   }
+  
   submit(): void {
     this.store.dispatch(LogInRequestAction({
       email: this.form.value.email,
