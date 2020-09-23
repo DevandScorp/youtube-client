@@ -1,9 +1,7 @@
-import { AlertService } from './alert.service';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
 import { User } from 'src/app/store/models/authorization.models';
 
 @Injectable()

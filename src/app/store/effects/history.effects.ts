@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { exhaustMap, map, catchError, mergeMap } from 'rxjs/operators';
-import { of, Observable } from 'rxjs';
+import { of } from 'rxjs';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HistoryService } from 'src/app/core/services/history.service';

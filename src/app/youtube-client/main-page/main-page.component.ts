@@ -1,11 +1,5 @@
-import { AuthorizationService } from '../../core/services/authorization.service';
-import { HistoryService } from '../../core/services/history.service';
 import { Component, OnInit, HostListener } from '@angular/core';
 import { HistoryElement } from '../../store/models/history.models';
-import { AlertService } from '../../core/services/alert.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store';
@@ -36,7 +30,6 @@ export class MainPageComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-    private authorizationService: AuthorizationService,
     private router: Router,
     private actions$: Actions) { }
 
