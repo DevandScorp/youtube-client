@@ -1,4 +1,4 @@
-@import '../../app.component.scss';
+@import 'config.scss';
 
 .container {
   display: flex;
@@ -8,14 +8,14 @@
   background: #f2f2f2;
 }
 
-form.login {
+form {
   width: 344px;
   height: 300px;
   background: white;
   border-radius: 5px;
 }
 
-div.login {
+.login {
   font-family: Roboto;
   font-style: normal;
   font-weight: bold;

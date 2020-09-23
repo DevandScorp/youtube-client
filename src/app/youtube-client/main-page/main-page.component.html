@@ -1,39 +1,17 @@
-<div
-  class="container"
-  (touchstart)="swipe($event, 'start')"
-  (touchend)="swipe($event, 'end')"
-  (mousedown)="swipeMouse($event, 'start')"
-  (mouseup)="swipeMouse($event, 'end')"
-  (keydown.enter)="search()"
->
+<div class="container" (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')"
+  (mousedown)="swipeMouse($event, 'start')" (mouseup)="swipeMouse($event, 'end')" (keydown.enter)="search()">
   <div class="search-field">
     <img src="/assets/youtube.svg" alt="" />
     <div>
-      <input
-        type="text"
-        placeholder="What do you want to find out"
-        class="search-input"
-        [(ngModel)]="searchString"
-        (focus)="showSearchHistory = true"
-        (blur)="showSearchHistory = false"
-      />
+      <input type="text" placeholder="What do you want to find out" class="search-input" [(ngModel)]="searchString"
+        (focus)="showSearchHistory = true" (blur)="showSearchHistory = false" />
       <div class="dropdown">
-        <div
-          class="dropdown-child"
-          [style.display]="showSearchHistory ? 'block' : 'none'"
-        >
-          <img
-            src="/assets/preloader.gif"
-            class="youtube-preloader-img"
-            style="width: 40px; height: 40px;"
-            *ngIf="(history$ | async).historyPreloader"
-            alt=""
-          />
+        <div class="dropdown-child" *ngIf="showSearchHistory">
+          <img src="/assets/preloader.gif" class="youtube-preloader-img" style="width: 40px; height: 40px;"
+            *ngIf="(history$ | async).historyPreloader" alt="" />
           <div
             *ngFor="let historyElement of (history$ | async).historyElements | filterHistory: searchString; let last = last"
-            (mousedown)="setSearchHistory(historyElement)"
-            [class.last-child]="last"
-          >
+            (mousedown)="setSearchHistory(historyElement)" [class.last-child]="last">
             {{ historyElement }}
           </div>
         </div>
@@ -43,32 +21,19 @@
     <img class="logout" src="/assets/logout.svg" alt="" (click)="logout()" />
   </div>
   <div class="youtube-container">
-    <img
-      src="/assets/preloader.gif"
-      *ngIf="(youtube$ | async).youtubeSearchPreloader"
-      class="youtube-preloader-img"
-      alt=""
-    />
-    <img
-      *ngIf="!searchString"
-      class="youtube-info-img"
-      src="/assets/left-arrow.svg"
-      alt=""
-    />
-    <div *ngIf="!searchString" class="youtube-info">
-      Swipe to move to the next/previous page
-    </div>
-    <img
-      *ngIf="!searchString"
-      class="youtube-info-img"
-      src="/assets/right-arrow.svg"
-      alt=""
-    />
+    <img src="/assets/preloader.gif" *ngIf="(youtube$ | async).youtubeSearchPreloader" class="youtube-preloader-img"
+      alt="" />
+    <ng-container *ngIf="!searchString">
+      <img class="youtube-info-img" src="/assets/left-arrow.svg" alt="" />
+      <div class="youtube-info">
+        Swipe to move to the next/previous page
+      </div>
+      <img class="youtube-info-img" src="/assets/right-arrow.svg" alt="" />
+    </ng-container>
+
     <ng-container *ngIf="!(youtube$ | async).youtubeSearchPreloader && searchString">
-      <app-youtube-preview
-        *ngFor="let youtubeElement of (youtube$ | async).youtubeElements"
-        [youtubeElement]="youtubeElement"
-      ></app-youtube-preview>
+      <app-youtube-preview *ngFor="let youtubeElement of (youtube$ | async).youtubeElements"
+        [youtubeElement]="youtubeElement"></app-youtube-preview>
     </ng-container>
   </div>
 </div>

@@ -1,4 +1,4 @@
-@import '../../app.component.scss';
+@import 'config.scss';
 
 .container {
   height: 100vh;
@@ -68,7 +68,7 @@
   cursor: pointer;
 }
 
-button.search-button {
+.search-button {
   background: $primary-color;
   border-radius: 0px 4px 4px 0px;
   width: 80px;
@@ -126,11 +126,11 @@ button.search-button {
     font-size: 14px;
     line-height: 14px;
     color: #6d6a6a;
-  }
 
-  div:hover {
-    cursor: pointer;
-    color: #c7bdbd;
+    &:hover {
+      cursor: pointer;
+      color: #c7bdbd;
+    }
   }
 
   &::-webkit-scrollbar {
@@ -154,10 +154,10 @@ button.search-button {
 }
 
 @media only screen and (max-width: 630px) {
-  input.search-input {
+  .search-input {
     width: 50vw;
   }
-  img.youtube-info-img {
+  .youtube-info-img {
     display: none;
   }
   .dropdown {

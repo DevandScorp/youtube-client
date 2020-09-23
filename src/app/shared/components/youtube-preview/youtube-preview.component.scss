@@ -1,4 +1,4 @@
-@import '../../../app.component.scss';
+@import 'config.scss';
 
 .youtube-preview {
   width: 303px;
@@ -14,7 +14,7 @@
   margin: 5px;
   text-align: center;
 
-  img.youtube-preview-image {
+  .youtube-preview-image {
     width: 223px;
     height: 123px;
     margin-top: 20px;
@@ -45,7 +45,7 @@
       }
     }
   }
-  
+
   .name {
     text-align: center;
     font-family: Roboto;
