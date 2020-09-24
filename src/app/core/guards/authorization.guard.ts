@@ -11,7 +11,7 @@ export class AuthorizationGuard implements CanActivate {
   constructor(private store: Store<AppState>,
     private router: Router) { }
     
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> | boolean {
+  canActivate(): boolean | Observable<boolean> | Promise<boolean> | boolean {
     return this.store.select(selectToken).pipe(
       take(1),
       mergeMap(response => {

@@ -12,7 +12,6 @@ import { selectToken } from 'src/app/store/selectors/authorization.selector';
 @Injectable()
 export class AuthorizationInterceptor implements HttpInterceptor {
   constructor(
-    private authorizationService: AuthorizationService,
     private alertService: AlertService,
     private router: Router,
     private store: Store<AppState>
@@ -33,7 +32,6 @@ export class AuthorizationInterceptor implements HttpInterceptor {
         return next.handle(req);
       }),
       catchError((error: HttpErrorResponse) => {
-        this.alertService.error('error');
         if (error.status === 401) {
           localStorage.clear();
           this.router.navigateByUrl('/login', {
