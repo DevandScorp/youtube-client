@@ -1,8 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { HistoryElement } from '../../store/models/history.models';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../store';
+import { AppState } from '../../../store';
 import { YoutubeSearchRequestAction, YoutubeActionTypes } from 'src/app/store/actions/youtube.actions';
 import { Actions, ofType } from '@ngrx/effects';
 import { GetHistoryElementsRequestAction } from 'src/app/store/actions/history.actions';

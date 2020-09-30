@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
-import { MainPageComponent } from './main-page/main-page.component';
+import { MainPageComponent } from './components/main-page/main-page.component';
 import { AuthorizationGuard } from '../core/guards/authorization.guard';
-import { SignUpComponent } from './sign-up/sign-up.component';
-import { ErrorPageComponent } from './error-page/error-page.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
 
 @NgModule({
     declarations: [

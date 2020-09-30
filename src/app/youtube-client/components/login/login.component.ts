@@ -1,9 +1,9 @@
-import { AlertService } from '../../core/services/alert.service';
+import { AlertService } from '../../../core/services/alert.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../store';
+import { AppState } from '../../../store';
 import { LogInRequestAction } from 'src/app/store/actions/authorization.actions';
 
 @Component({
